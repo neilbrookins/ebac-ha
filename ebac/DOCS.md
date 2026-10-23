@@ -12,7 +12,7 @@ Click inside the terminal window so it has the keyboard, then press a letter at 
 - **I** for information about EBaC.
 - **E** to exit.
 
-In any list or passage, press **?** to see the keys you can use there.
+In any list or passage, press **?** to see the keys you can use there. If the window changes size, for example when a phone's on-screen keyboard appears or goes away, the passage or list is redrawn at once to fit.
 
 ## Reading
 

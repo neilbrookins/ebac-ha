@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.0.5
+
+- When the window changes size, such as when a phone's on-screen
+  keyboard appears or goes away, a passage or a list of search results
+  is redrawn at once to fill the new size, from the same first verse.
+  **CTRL-L** redraws it too.
+- Built from EBaC commit `6d0d039`.
+
 ## 2.0.4
 
 - The concordance index is now built while installing, instead of
