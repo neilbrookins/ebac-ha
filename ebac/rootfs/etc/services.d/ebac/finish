@@ -1,0 +1,12 @@
+#!/usr/bin/env bashio
+# shellcheck shell=bash
+# ==============================================================================
+# If ttyd itself fails, stop the app so Home Assistant shows it as stopped.
+# (Exiting EBaC does not come here: that only ends one browser session.)
+# ==============================================================================
+if [[ "$1" -ne 0 ]] && [[ "$1" -ne 256 ]]; then
+  bashio::log.warning "Halt app"
+  exec /run/s6/basedir/bin/halt
+fi
+
+bashio::log.info "Service restart after closing"

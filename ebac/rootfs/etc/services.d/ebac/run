@@ -1,0 +1,21 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+# ==============================================================================
+# Start the web terminal (ttyd) with EBaC running in it.
+#
+# Each time someone opens EBaC in the sidebar, ttyd starts a fresh copy of
+# the program. When the user exits EBaC, ttyd greys the screen and offers
+# "Press Enter to Reconnect", just like the Terminal app.
+# ==============================================================================
+bashio::log.info "Starting EBaC..."
+
+# Where EBaC's files are (the program, 'trans' and the AV folder).
+export BIBLEROOT=/usr/share/ebac
+
+# EBaC keeps the search history in $HOME/.ebac_log. /data is the app's
+# own storage, kept across restarts, updates and backups.
+export HOME=/data
+cd /data || bashio::exit.nok "Can't find the /data folder!"
+
+exec ttyd --writable --port 8099 --client-option titleFixed=EBaC \
+    /usr/share/ebac/bible
