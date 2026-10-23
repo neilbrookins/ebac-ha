@@ -1,0 +1,22 @@
+#!/bin/sh
+# ==============================================================================
+# Start EBaC for one browser session, with that Home Assistant user's own
+# search history.
+#
+# Home Assistant's ingress tells the app who is logged in with the
+# X-Remote-User-Name header; ttyd (started with --auth-header) passes it
+# here as TTYD_USER. Each user gets a folder of their own, /data/users/NAME,
+# used as EBaC's home folder, so EBaC keeps that user's history in
+# /data/users/NAME/.ebac_log, just as it uses ~/.ebac_log on Linux.
+# ==============================================================================
+
+# Keep only characters that are safe in a folder name.
+user=$(printf '%s' "${TTYD_USER:-}" | tr -c 'A-Za-z0-9._-' '_')
+case "$user" in
+    ""|.|..) user=unknown ;;
+esac
+
+export HOME="/data/users/$user"
+mkdir -p "$HOME"
+cd "$HOME" || exit 1
+exec /usr/share/ebac/bible

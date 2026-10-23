@@ -50,7 +50,7 @@ Pressing **E** at the main menu exits EBaC. As with the Terminal app, the window
 
 ## Your search history
 
-Earlier searches are saved in this app's own storage, so they are kept when Home Assistant restarts, when the app is updated, and in backups. Everyone who uses EBaC on this Home Assistant shares the same history.
+Earlier searches are saved in this app's own storage, so they are kept when Home Assistant restarts, when the app is updated, and in backups. Each Home Assistant user has their own history: what one person searches for is not shown to anyone else.
 
 ## About
 
