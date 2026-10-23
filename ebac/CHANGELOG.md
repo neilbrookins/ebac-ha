@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.1.4
+
+- In the list of search results, the prompt at the bottom no longer
+  wraps onto a second line on a narrow screen such as a phone: it
+  becomes **--More-- (Press ? for menu.)**. Wider windows show the whole
+  line as before.
+- Built from EBaC commit `2c22597`.
+
 ## 2.1.3
 
 - The main menu choices are easier to tap: there's a blank line between
