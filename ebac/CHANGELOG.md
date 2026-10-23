@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.0.6
+
+- In the list of search results, a label can be typed even when its
+  entry isn't on the screen any more: if hiding the phone's keyboard
+  showed entries 3, 4 and 5, typing **3** still opens that entry once
+  the keyboard is back. Past the end of the list, the help screen still
+  appears.
+- Built from EBaC commit `f44c797`.
+
 ## 2.0.5
 
 - When the window changes size, such as when a phone's on-screen
