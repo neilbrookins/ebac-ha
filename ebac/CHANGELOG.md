@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.1.2
+
+- A hidden phone keyboard now stays hidden when you swipe or tap a
+  result, so you can read a full-height screen at a time. Before, the
+  keyboard came back as the new screen was drawn, shrinking the window
+  part way through: a page back then skipped the lines in between. While
+  the keyboard is showing, swipes leave it showing; tapping anywhere else
+  still brings it up.
+
 ## 2.1.1
 
 - Swiping down now always goes back a verse or a page. Before, the

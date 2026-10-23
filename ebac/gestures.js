@@ -32,6 +32,14 @@
  * old screens, and the terminal would scroll back to them on a swipe down,
  * fighting the swipe's own job (previous verse or page). The terminal's own
  * touch scrolling is also kept from seeing the swipes this script uses.
+ *
+ * Hiding a phone's keyboard leaves the terminal's typing box focused, and
+ * the phone then brings the keyboard back as soon as the screen is redrawn,
+ * shrinking the window in the middle of a page: a page back would skip the
+ * lines in between. So a gesture made while the keyboard is hidden lets go
+ * of the typing box first, and the keyboard stays hidden. (While it's
+ * showing, gestures leave it showing.) A tap anywhere else still brings it
+ * up.
  */
 (function () {
     "use strict";
@@ -46,9 +54,34 @@
     var touchTerm = null;   /* the terminal the touch handlers are on */
     var start = null;       /* where the current touch began */
     var lastTouchEnd = 0;   /* to ignore the click a browser adds after a tap */
+    var fullHeight = {};    /* the tallest the window has been, per width */
 
     function send(key) {
         term.input(key, true);
+    }
+
+    /* the height of the part of the page that can be seen */
+    function windowHeight() {
+        return window.visualViewport ? window.visualViewport.height
+                                     : window.innerHeight;
+    }
+
+    /* remember the window's full height (no keyboard) for this width */
+    function noteHeight() {
+        var w = window.innerWidth, h = windowHeight();
+        if (!fullHeight[w] || h > fullHeight[w])
+            fullHeight[w] = h;
+    }
+
+    /* before a gesture that needs no typing: if the typing box is focused
+       but the keyboard is hidden (the window is its full height), let go of
+       the typing box, so the phone doesn't bring the keyboard back */
+    function keepKeyboardHidden() {
+        var box = term.textarea;
+        noteHeight();
+        if (box && document.activeElement === box &&
+                windowHeight() >= 0.85 * fullHeight[window.innerWidth])
+            box.blur();
     }
 
     /* the text on a row of the screen, 0 = top */
@@ -164,6 +197,8 @@
             action = tapAction(rowAt(t.clientY));
             if (!action)
                 return;                 /* an ordinary tap: keyboard */
+            if (!action.keyboard)
+                keepKeyboardHidden();
             send(action.key);
             if (!action.keyboard && e.cancelable) {
                 e.preventDefault();     /* no keyboard for this tap */
@@ -173,6 +208,7 @@
         }
         key = swipeKey(dx, dy);
         if (key !== null) {
+            keepKeyboardHidden();
             send(key);
             if (e.cancelable)
                 e.preventDefault();
@@ -258,6 +294,10 @@
         }
     }());
     setInterval(check, 50);
+    noteHeight();
+    window.addEventListener("resize", noteHeight);
+    if (window.visualViewport)
+        window.visualViewport.addEventListener("resize", noteHeight);
 
     /* for testing: which screen the page thinks EBaC is showing */
     window.ebacGestureMode = function () { return mode; };
