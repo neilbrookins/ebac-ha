@@ -50,7 +50,7 @@ On a phone or tablet, you only need the keyboard to type a search or a book, cha
 
 | Where | Tap | Swipe |
 |---|---|---|
-| Main menu | **Change**, **View**, **Search** or **Information** (Exit isn't tappable) | — |
+| Main menu | **Change**, **View**, **Search** or **Information**, or the blank line next to it (Exit isn't tappable) | — |
 | Choosing a translation | a translation | left or right: back, unchanged |
 | Search results | a result, anywhere on it: read it in context | up: next page · down: previous page · left or right: back |
 | Reading a passage | — | up or down: one verse · a long swipe: a whole screen · left or right: back to the results |

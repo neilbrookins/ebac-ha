@@ -11,9 +11,9 @@
  * in EBaC's curses.c), and the gestures depend on it:
  *
  *   screen    tap                              swipe
- *   menu      C, V, S or I line: that key       -
- *             (never E, so a slightly
- *             missed tap can't exit)
+ *   menu      the nearest of C, V, S or I:      -
+ *             that key (never E, so a
+ *             slightly missed tap can't exit)
  *   trans     a numbered translation: it        left/right: back, unchanged
  *   list      a result (any line of it): its    up: next page, down: previous
  *             label                             left/right: back (x)
@@ -91,26 +91,52 @@
         return line ? line.translateToString(true) : "";
     }
 
-    /* the row of the screen at a point on the page, or -1 */
-    function rowAt(y) {
+    /* where a point on the page is, in rows from the top of the screen:
+       2.5 is the middle of row 2 (rows count from 0) */
+    function rowPos(y) {
         var screen = term.element.querySelector(".xterm-screen");
         var r = screen.getBoundingClientRect();
-        var row = Math.floor((y - r.top) / (r.height / term.rows));
+        return (y - r.top) / (r.height / term.rows);
+    }
+
+    /* the row of the screen at a point on the page, or -1 */
+    function rowAt(y) {
+        var row = Math.floor(rowPos(y));
         return (row >= 0 && row < term.rows) ? row : -1;
     }
 
-    /* what a tap on a row does: { key, keyboard } or null for nothing */
-    function tapAction(row) {
-        var m, r, text, key;
+    /* the main menu choice nearest a point: its letter, or null. EBaC puts
+       a blank line between the choices, and the half of it nearer a choice
+       goes with that choice, so a tap a little off still finds it. E is
+       found too, so that a tap nearer Exit than Information does nothing. */
+    function nearestChoice(y) {
+        var pos = rowPos(y), best = null, bestDist = 1, r, m, d;
+
+        for (r = 0; r < term.rows; r++) {
+            m = /^\s*([CVSIE])\)/.exec(rowText(r));
+            if (!m)
+                continue;
+            d = Math.abs(pos - (r + 0.5));
+            if (d < bestDist) {
+                best = m[1];
+                bestDist = d;
+            }
+        }
+        return best;
+    }
+
+    /* what a tap does: { key, keyboard } or null for nothing */
+    function tapAction(y) {
+        var m, r, text, key, row = rowAt(y);
 
         if (row < 0)
             return null;
         switch (mode) {
         case "menu":
-            m = /^\s*([CVSI])\)/.exec(rowText(row));
-            if (!m)
+            key = nearestChoice(y);
+            if (!key || key === "E")
                 return null;
-            key = m[1].toLowerCase();
+            key = key.toLowerCase();
             /* View and Search ask for typing next: let the keyboard come up */
             return { key: key, keyboard: key === "v" || key === "s" };
         case "trans":
@@ -194,7 +220,7 @@
         lastTouchEnd = Date.now();
 
         if (Math.abs(dx) < TAP_MAX && Math.abs(dy) < TAP_MAX) {
-            action = tapAction(rowAt(t.clientY));
+            action = tapAction(t.clientY);
             if (!action)
                 return;                 /* an ordinary tap: keyboard */
             if (!action.keyboard)
@@ -221,7 +247,7 @@
 
         if (Date.now() - lastTouchEnd < 1000)
             return;                     /* the click a tap already handled */
-        action = tapAction(rowAt(e.clientY));
+        action = tapAction(e.clientY);
         if (action && action.key !== " ")
             send(action.key);
     }
@@ -301,4 +327,9 @@
 
     /* for testing: which screen the page thinks EBaC is showing */
     window.ebacGestureMode = function () { return mode; };
+    /* for testing: the key a tap at this height on the page would send */
+    window.ebacTapKey = function (y) {
+        var action = tapAction(y);
+        return action ? action.key : null;
+    };
 }());

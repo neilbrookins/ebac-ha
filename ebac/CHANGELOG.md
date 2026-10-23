@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.1.3
+
+- The main menu choices are easier to tap: there's a blank line between
+  them, and a tap goes to the nearest choice, so each one can be tapped
+  anywhere over two rows. Exit still can't be tapped.
+- Built from EBaC commit `50eb3b1`.
+
 ## 2.1.2
 
 - A hidden phone keyboard now stays hidden when you swipe or tap a
