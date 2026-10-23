@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.0.3
+
+- When viewing a passage, the chapter and verse can be typed with the
+  letters **q w e r t y u i o p** for **1 2 3 4 5 6 7 8 9 0**, so a
+  phone's on-screen keyboard can stay on letters.
+- Built from EBaC commit `d5591ff`.
+
 ## 2.0.2
 
 - In the list of search results, the letters **q w e r t y u i o** pick
