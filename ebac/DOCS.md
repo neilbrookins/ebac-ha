@@ -44,6 +44,20 @@ In the list of results, press the label beside a verse (**1** to **9**, then **a
 
 While typing a search, **Up** and **Down** bring back earlier searches. **Left**, **Right**, **Home**, **End** and **Delete** edit the line.
 
+## Touch gestures
+
+On a phone or tablet, you only need the keyboard to type a search or a book, chapter and verse. Everything else works by tapping and swiping:
+
+| Where | Tap | Swipe |
+|---|---|---|
+| Main menu | **Change**, **View**, **Search** or **Information** (Exit isn't tappable) | — |
+| Choosing a translation | a translation | left or right: back, unchanged |
+| Search results | a result, anywhere on it: read it in context | up: next page · down: previous page · left or right: back |
+| Reading a passage | — | up or down: one verse · a long swipe: a whole screen · left or right: back to the results |
+| "Press any key" | anywhere | anywhere |
+
+Swiping up moves on to what comes next, as when scrolling. Tapping **View** or **Search** brings up the keyboard, since you type next; the other gestures don't. Tapping anywhere else brings up the keyboard, as before, so you can still use every key.
+
 ## Exiting
 
 Pressing **E** at the main menu exits EBaC. As with the Terminal app, the window greys out and offers **Press ⏎ to Reconnect**; press Enter to start EBaC again at the main menu.

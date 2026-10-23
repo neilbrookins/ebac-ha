@@ -21,6 +21,8 @@ cd /data || bashio::exit.nok "Can't find the /data folder!"
 # --auth-header: Home Assistant's ingress adds the logged-in user's name in
 # X-Remote-User-Name; ttyd passes it to ebac-session as TTYD_USER (and
 # refuses connections without it, which only come from outside ingress).
+# --index: ttyd's own page with touch gestures added (see the Dockerfile).
 exec ttyd --writable --port 8099 --client-option titleFixed=EBaC \
     --auth-header X-Remote-User-Name \
+    --index /usr/share/ebac/index.html \
     /usr/bin/ebac-session

@@ -14,7 +14,7 @@ ARG BUILD_FROM=ghcr.io/home-assistant/base:3.24-2026.10.1
 # ---- Stage 1: compile EBaC ----
 FROM ${BUILD_FROM} AS build
 
-ARG EBAC_COMMIT=ff5e31c64ed992faee45d0ac11826b09068f6f13
+ARG EBAC_COMMIT=8cc97e63c5a49a0389d295b05aa87cdd416992d2
 
 RUN apk add --no-cache build-base ncurses-dev tar
 
@@ -38,6 +38,13 @@ RUN apk add --no-cache ttyd ncurses-libs ncurses-terminfo-base
 
 # EBaC's files: the program, the 'trans' list and the King James text.
 COPY --from=build /out /usr/share/ebac
+
+# ttyd's web page, with touch gestures added (taps and swipes on a phone
+# become the keys EBaC understands; see gestures.js). Made from the page of
+# the ttyd installed above, so the two always match.
+COPY gestures.js make-index.sh /tmp/
+RUN sh /tmp/make-index.sh /tmp/gestures.js /usr/share/ebac/index.html \
+    && rm /tmp/gestures.js /tmp/make-index.sh
 
 # The script that starts ttyd with EBaC in it.
 COPY rootfs /

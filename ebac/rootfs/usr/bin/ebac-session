@@ -19,4 +19,8 @@ esac
 export HOME="/data/users/$user"
 mkdir -p "$HOME"
 cd "$HOME" || exit 1
+
+# Have EBaC tell the web page which screen is showing, so the page's touch
+# gestures know which key to send (see gestures.js).
+export EBAC_GESTURES=1
 exec /usr/share/ebac/bible

@@ -1,5 +1,21 @@
 # Changelog
 
+## 2.1.0
+
+- Touch gestures, so on a phone the keyboard is only needed for typing:
+  - Main menu: tap **Change**, **View**, **Search** or **Information**.
+    (Exit is not tappable, so a slightly missed tap can't close EBaC.)
+  - Choosing a translation: tap one; swipe left or right to go back.
+  - Search results: tap a result to read it; swipe up for the next page,
+    down for the previous one; swipe left or right to go back.
+  - Reading: swipe up or down to move one verse, or a long swipe for a
+    whole screen; swipe left or right to go back to the results.
+  - "Press any key" screens: tap anywhere.
+  Taps on View and Search bring up the keyboard, since typing comes
+  next; other gestures don't. Tapping anywhere else brings up the
+  keyboard, as before.
+- Built from EBaC commit `8cc97e6`.
+
 ## 2.0.8
 
 - At the chapter and verse prompts, **m** types a minus sign (shown as

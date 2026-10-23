@@ -1,0 +1,236 @@
+/*
+ * Touch gestures for EBaC in the Home Assistant app.
+ *
+ * This script is added to the web page of ttyd, the web terminal EBaC runs
+ * in. The terminal itself never passes swipes on to the program, and every
+ * tap makes a phone show its keyboard; so the gestures are recognised here,
+ * in the page, and turned into the keys EBaC already understands.
+ *
+ * EBaC says which screen is showing with a private escape sequence,
+ * "ESC ] 7766 ; name BEL" (only when EBAC_GESTURES is set; see scr_mode()
+ * in EBaC's curses.c), and the gestures depend on it:
+ *
+ *   screen    tap                              swipe
+ *   menu      C, V, S or I line: that key       -
+ *             (never E, so a slightly
+ *             missed tap can't exit)
+ *   trans     a numbered translation: it        left/right: back, unchanged
+ *   list      a result (any line of it): its    up: next page, down: previous
+ *             label                             left/right: back (x)
+ *   passage   -                                 up/down: next/previous verse;
+ *                                               a long swipe: next/previous
+ *                                               screen; left/right: back (x)
+ *   anykey    anywhere: a key ("Press any key") any: a key
+ *   input     -                                 -
+ *
+ * A tap this script uses doesn't bring up the keyboard, except on View and
+ * Search in the main menu, which ask for typing next. Any other tap works
+ * as before: it brings up the keyboard.
+ */
+(function () {
+    "use strict";
+
+    var MODE_OSC = 7766;    /* EBaC's "which screen" escape sequence */
+    var TAP_MAX = 24;       /* px: a touch moving less than this is a tap */
+    var LONG_SWIPE = 0.3;   /* a vertical swipe longer than this share of
+                               the terminal's height moves a whole screen */
+
+    var mode = "";          /* the screen EBaC last said it was showing */
+    var term = null;        /* the terminal being listened to */
+    var touchTerm = null;   /* the terminal the touch handlers are on */
+    var start = null;       /* where the current touch began */
+    var lastTouchEnd = 0;   /* to ignore the click a browser adds after a tap */
+
+    function send(key) {
+        term.input(key, true);
+    }
+
+    /* the text on a row of the screen, 0 = top */
+    function rowText(row) {
+        var buf = term.buffer.active;
+        var line = buf.getLine(buf.viewportY + row);
+        return line ? line.translateToString(true) : "";
+    }
+
+    /* the row of the screen at a point on the page, or -1 */
+    function rowAt(y) {
+        var screen = term.element.querySelector(".xterm-screen");
+        var r = screen.getBoundingClientRect();
+        var row = Math.floor((y - r.top) / (r.height / term.rows));
+        return (row >= 0 && row < term.rows) ? row : -1;
+    }
+
+    /* what a tap on a row does: { key, keyboard } or null for nothing */
+    function tapAction(row) {
+        var m, r, text, key;
+
+        if (row < 0)
+            return null;
+        switch (mode) {
+        case "menu":
+            m = /^\s*([CVSI])\)/.exec(rowText(row));
+            if (!m)
+                return null;
+            key = m[1].toLowerCase();
+            /* View and Search ask for typing next: let the keyboard come up */
+            return { key: key, keyboard: key === "v" || key === "s" };
+        case "trans":
+            m = /^\s*([1-9])\)/.exec(rowText(row));
+            return m ? { key: m[1], keyboard: false } : null;
+        case "list":
+            /* a result's label is on its first line; its other lines start
+               with spaces. Anything else (the header, "--More--", a blank
+               line) isn't a result. */
+            for (r = row; r >= 0; r--) {
+                text = rowText(r);
+                m = /^([1-9a-z])\)/.exec(text);
+                if (m)
+                    return { key: m[1], keyboard: false };
+                if (!/^\s+\S/.test(text))
+                    return null;
+            }
+            return null;
+        case "anykey":
+            return { key: " ", keyboard: false };
+        }
+        return null;
+    }
+
+    /* the key for a swipe, or null for nothing */
+    function swipeKey(dx, dy) {
+        var height = term.element.getBoundingClientRect().height;
+        var forward = dy < 0;   /* finger moved up: on to what comes next */
+
+        if (mode === "anykey")
+            return " ";
+        if (Math.abs(dx) > Math.abs(dy)) {      /* left or right: back */
+            if (mode === "passage" || mode === "list" || mode === "trans")
+                return "x";
+            return null;
+        }
+        if (mode === "list")
+            return forward ? " " : "p";
+        if (mode === "passage") {
+            if (Math.abs(dy) >= LONG_SWIPE * height)
+                return forward ? " " : "p";     /* a screen */
+            return forward ? "." : ",";         /* a verse */
+        }
+        return null;
+    }
+
+    function gestureScreen() {
+        return mode === "menu" || mode === "trans" || mode === "list" ||
+               mode === "passage" || mode === "anykey";
+    }
+
+    function onTouchStart(e) {
+        if (e.touches.length !== 1) {
+            start = null;               /* two fingers: leave it alone */
+            return;
+        }
+        start = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    }
+
+    function onTouchMove(e) {
+        /* keep the page from scrolling or refreshing under a swipe */
+        if (start && gestureScreen() && e.cancelable)
+            e.preventDefault();
+    }
+
+    function onTouchEnd(e) {
+        var t, dx, dy, action, key;
+
+        if (!start || e.changedTouches.length !== 1)
+            return;
+        t = e.changedTouches[0];
+        dx = t.clientX - start.x;
+        dy = t.clientY - start.y;
+        start = null;
+        lastTouchEnd = Date.now();
+
+        if (Math.abs(dx) < TAP_MAX && Math.abs(dy) < TAP_MAX) {
+            action = tapAction(rowAt(t.clientY));
+            if (!action)
+                return;                 /* an ordinary tap: keyboard */
+            send(action.key);
+            if (!action.keyboard && e.cancelable) {
+                e.preventDefault();     /* no keyboard for this tap */
+                e.stopPropagation();
+            }
+            return;
+        }
+        key = swipeKey(dx, dy);
+        if (key !== null) {
+            send(key);
+            if (e.cancelable)
+                e.preventDefault();
+        }
+    }
+
+    /* with a mouse, a click on a menu line, translation or result works too */
+    function onClick(e) {
+        var action;
+
+        if (Date.now() - lastTouchEnd < 1000)
+            return;                     /* the click a tap already handled */
+        action = tapAction(rowAt(e.clientY));
+        if (action && action.key !== " ")
+            send(action.key);
+    }
+
+    /* listen for EBaC's "which screen" messages: as soon as the terminal
+       exists, before any output arrives */
+    function listen(t) {
+        term = t;
+        mode = "";
+        t.parser.registerOscHandler(MODE_OSC, function (name) {
+            mode = name;
+            return true;
+        });
+    }
+
+    /* handle touches on the terminal: once it is on the page */
+    function attach(t) {
+        var el = t.element;
+
+        touchTerm = t;
+        el.style.touchAction = "none";  /* the page mustn't pan or zoom here */
+        el.addEventListener("touchstart", onTouchStart, { capture: true, passive: true });
+        el.addEventListener("touchmove", onTouchMove, { capture: true, passive: false });
+        el.addEventListener("touchend", onTouchEnd, { capture: true, passive: false });
+        el.addEventListener("click", onClick, true);
+    }
+
+    function check() {
+        var t = window.term;
+
+        if (t && t.parser && t !== term)
+            listen(t);
+        if (t && t.element && t === term && t !== touchTerm)
+            attach(t);
+    }
+
+    /*
+    ** ttyd makes its terminal after the page loads, and again if it has to
+    ** reconnect. Catch the moment it does (it sets window.term), so the
+    ** handlers are in place before EBaC's first screen arrives and says
+    ** which screen it is. As a fallback, also look for it regularly.
+    */
+    (function () {
+        var current = window.term;
+
+        try {
+            Object.defineProperty(window, "term", {
+                configurable: true,
+                get: function () { return current; },
+                set: function (t) { current = t; setTimeout(check, 0); check(); }
+            });
+        } catch (err) {
+            /* not possible here: the regular check below still works */
+        }
+    }());
+    setInterval(check, 50);
+
+    /* for testing: which screen the page thinks EBaC is showing */
+    window.ebacGestureMode = function () { return mode; };
+}());
