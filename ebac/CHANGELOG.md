@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.4
+
+- The concordance index is now built while installing, instead of
+  being downloaded with EBaC; searching works exactly as before.
+- Built from EBaC commit `75af1f9`.
+
 ## 2.0.3
 
 - When viewing a passage, the chapter and verse can be typed with the
