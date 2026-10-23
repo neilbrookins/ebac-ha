@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.8
+
+- At the chapter and verse prompts, **m** types a minus sign (shown as
+  "-"), so negative numbers need no keyboard switching on a phone.
+- Built from EBaC commit `ff5e31c`.
+
 ## 2.0.7
 
 - A chapter or verse of **0**, or a negative number, counts back from the
