@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.1.1
+
+- Swiping down now always goes back a verse or a page. Before, the
+  terminal could also scroll back through old screens at the same time,
+  showing the wrong text. The terminal no longer keeps lines that have
+  scrolled off the top (EBaC redraws every screen itself, so nothing is
+  lost), and it no longer scrolls on its own under a swipe.
+
 ## 2.1.0
 
 - Touch gestures, so on a phone the keyboard is only needed for typing:

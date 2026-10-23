@@ -26,6 +26,12 @@
  * A tap this script uses doesn't bring up the keyboard, except on View and
  * Search in the main menu, which ask for typing next. Any other tap works
  * as before: it brings up the keyboard.
+ *
+ * The terminal's scrollback (the lines that have scrolled off the top) is
+ * turned off. EBaC redraws the whole screen itself, so those lines are only
+ * old screens, and the terminal would scroll back to them on a swipe down,
+ * fighting the swipe's own job (previous verse or page). The terminal's own
+ * touch scrolling is also kept from seeing the swipes this script uses.
  */
 (function () {
     "use strict";
@@ -129,11 +135,17 @@
             return;
         }
         start = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        if (gestureScreen())
+            e.stopPropagation();        /* not for the terminal's scrolling */
     }
 
     function onTouchMove(e) {
-        /* keep the page from scrolling or refreshing under a swipe */
-        if (start && gestureScreen() && e.cancelable)
+        if (!start || !gestureScreen())
+            return;
+        /* keep the page from scrolling or refreshing under a swipe, and the
+           terminal from scrolling its view */
+        e.stopPropagation();
+        if (e.cancelable)
             e.preventDefault();
     }
 
@@ -183,10 +195,23 @@
     function listen(t) {
         term = t;
         mode = "";
+        noScrollback(t);
         t.parser.registerOscHandler(MODE_OSC, function (name) {
             mode = name;
             return true;
         });
+    }
+
+    /* keep no scrolled-off lines, so there is nothing to scroll back to */
+    function noScrollback(t) {
+        try {
+            if (t.options)
+                t.options.scrollback = 0;
+            else
+                t.setOption("scrollback", 0);   /* older terminals */
+        } catch (err) {
+            /* leave it */
+        }
     }
 
     /* handle touches on the terminal: once it is on the page */
@@ -206,6 +231,9 @@
 
         if (t && t.parser && t !== term)
             listen(t);
+        /* ttyd applies its settings when it connects: keep scrollback off */
+        if (t && t === term && t.options && t.options.scrollback !== 0)
+            noScrollback(t);
         if (t && t.element && t === term && t !== touchTerm)
             attach(t);
     }
