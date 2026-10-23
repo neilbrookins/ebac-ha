@@ -14,7 +14,7 @@ ARG BUILD_FROM=ghcr.io/home-assistant/base:3.24-2026.10.1
 # ---- Stage 1: compile EBaC ----
 FROM ${BUILD_FROM} AS build
 
-ARG EBAC_COMMIT=74d94951f5aaa664413c83007ced6cbad6019554
+ARG EBAC_COMMIT=9215c247fa9f32765a81d74ecdde3bcd3703d168
 
 RUN apk add --no-cache build-base ncurses-dev tar
 

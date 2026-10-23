@@ -40,7 +40,7 @@ Type the words to search for, then Enter. Searches use postfix (reverse Polish) 
 
 A number means AND (`0` = in the same verse), `,` means OR, `-` means AND NOT, and `@` plus the start of a book's name means that book.
 
-In the list of results, press the number or letter beside a verse to read it in context.
+In the list of results, press the label beside a verse (**1** to **9**, then **a**, **b**, ...) to read it in context, and **x** to come back to the list. The letters under the digits, **q w e r t y u i o**, also pick entries 1 to 9, so on a phone you never have to switch the on-screen keyboard to numbers.
 
 While typing a search, **Up** and **Down** bring back earlier searches. **Left**, **Right**, **Home**, **End** and **Delete** edit the line.
 
