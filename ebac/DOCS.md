@@ -6,7 +6,7 @@ Select **EBaC** in the sidebar. (If it isn't there, open this app's page under *
 
 Click inside the terminal window so it has the keyboard, then press a letter at the main menu:
 
-- **V** to view a passage: type the start of a book name, then the chapter and verse. For the numbers you can type the letters under the digits instead, **q w e r t y u i o p** for **1 2 3 4 5 6 7 8 9 0**, so a phone's keyboard can stay on letters.
+- **V** to view a passage: type the start of a book name, then the chapter and verse. For the numbers you can type the letters under the digits instead, **q w e r t y u i o p** for **1 2 3 4 5 6 7 8 9 0**, so a phone's keyboard can stay on letters. Chapter and verse count from the start of the book, so **0** or a negative number counts back: John 3:0 is John 2:25, and Exodus chapter 0 is Genesis 50. Enter alone means 1.
 - **S** to search for words.
 - **C** to change translation.
 - **I** for information about EBaC.

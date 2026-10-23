@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.0.7
+
+- A chapter or verse of **0**, or a negative number, counts back from the
+  start of the book: John 3:0 is John 2:25, Exodus chapter 0 is
+  Genesis 50, John 3:-3 is John 2:22. Pressing Enter alone still means 1.
+- Built from EBaC commit `72c9e62`.
+
 ## 2.0.6
 
 - In the list of search results, a label can be typed even when its
