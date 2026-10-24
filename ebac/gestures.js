@@ -23,8 +23,14 @@
  *   anykey    anywhere: a key ("Press any key") any: a key
  *   search    -                                 down: the previous search in
  *                                               the history, up: the next
- *                                               (Up and Down arrows), any length
- *   input     -                                 -
+ *                                               (Up and Down arrows), any length;
+ *                                               left/right: cursor left/right,
+ *                                               a long one: to the start/end
+ *                                               (Home, End)
+ *   input     -                                 left: erase a character
+ *   (book,                                      (Backspace), a long one: the
+ *   chapter,                                    whole entry (CTRL-U)
+ *   verse)
  *
  * A tap this script uses doesn't bring up the keyboard, except on View and
  * Search in the main menu, which ask for typing next. Any other tap works
@@ -49,8 +55,9 @@
 
     var MODE_OSC = 7766;    /* EBaC's "which screen" escape sequence */
     var TAP_MAX = 24;       /* px: a touch moving less than this is a tap */
-    var LONG_SWIPE = 0.3;   /* a vertical swipe longer than this share of
-                               the terminal's height moves a whole screen */
+    var LONG_SWIPE = 0.3;   /* a swipe longer than this share of the
+                               terminal's height (or, sideways, its width)
+                               is a long one: a whole screen, say */
 
     var mode = "";          /* the screen EBaC last said it was showing */
     var term = null;        /* the terminal being listened to */
@@ -166,14 +173,23 @@
 
     /* the key for a swipe, or null for nothing */
     function swipeKey(dx, dy) {
-        var height = term.element.getBoundingClientRect().height;
+        var box = term.element.getBoundingClientRect();
+        var height = box.height;
         var forward = dy < 0;   /* finger moved up: on to what comes next */
+        var longSide = Math.abs(dx) >= LONG_SWIPE * box.width;
 
         if (mode === "anykey")
             return " ";
-        if (Math.abs(dx) > Math.abs(dy)) {      /* left or right: back */
+        if (Math.abs(dx) > Math.abs(dy)) {      /* left or right */
             if (mode === "passage" || mode === "list" || mode === "trans")
-                return "x";
+                return "x";                     /* back */
+            if (mode === "search") {            /* move the cursor */
+                if (dx < 0)
+                    return longSide ? "\x01" : "\x02";  /* Home, Left */
+                return longSide ? "\x05" : "\x06";      /* End, Right */
+            }
+            if (mode === "input" && dx < 0)     /* erase */
+                return longSide ? "\x15" : "\b";        /* CTRL-U, Backspace */
             return null;
         }
         if (mode === "list")
@@ -190,7 +206,8 @@
 
     function gestureScreen() {
         return mode === "menu" || mode === "trans" || mode === "list" ||
-               mode === "passage" || mode === "anykey" || mode === "search";
+               mode === "passage" || mode === "anykey" || mode === "search" ||
+               mode === "input";
     }
 
     function onTouchStart(e) {

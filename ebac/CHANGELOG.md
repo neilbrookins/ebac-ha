@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.1.9
+
+- Editing by swiping sideways:
+  - At the search prompt, a short swipe left or right moves the cursor
+    one character; a long one goes to the start or the end of the line
+    (like Home and End).
+  - At the book name, chapter and verse prompts, a short swipe left
+    erases the last character (like Backspace); a long one erases the
+    whole entry.
+  A long swipe is one across at least a third of the screen.
+
 ## 2.1.8
 
 - At the search prompt, swipe down to bring back your previous search,
