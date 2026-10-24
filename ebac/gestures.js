@@ -19,7 +19,9 @@
  *             label                             left/right: back (x)
  *   passage   -                                 up/down: next/previous verse;
  *                                               a long swipe: next/previous
- *                                               screen; left/right: back (x)
+ *                                               screen; left/right: back (x);
+ *                                               with two fingers, up/down: the
+ *                                               next/previous book (f, b)
  *   anykey    anywhere: a key ("Press any key") any: a key
  *   search    -                                 down: the previous search in
  *                                               the history, up: the next
@@ -63,6 +65,8 @@
     var term = null;        /* the terminal being listened to */
     var touchTerm = null;   /* the terminal the touch handlers are on */
     var start = null;       /* where the current touch began */
+    var two = null;         /* a two-finger touch: where the two fingers'
+                               midpoint began, and where it is now */
     var lastTouchEnd = 0;   /* to ignore the click a browser adds after a tap */
     var fullHeight = {};    /* the tallest the window has been, per width */
 
@@ -210,18 +214,36 @@
                mode === "input";
     }
 
+    /* the point midway between the first two fingers */
+    function midpoint(touches) {
+        return { x: (touches[0].clientX + touches[1].clientX) / 2,
+                 y: (touches[0].clientY + touches[1].clientY) / 2 };
+    }
+
+    /*
+    ** Two fingers rarely touch, or lift, at the same instant. So a touch
+    ** becomes a two-finger one as soon as a second finger joins it, stays
+    ** one until every finger has lifted, and is then judged by how far the
+    ** midpoint of the two fingers moved. Three or more fingers: nothing.
+    */
     function onTouchStart(e) {
-        if (e.touches.length !== 1) {
-            start = null;               /* two fingers: leave it alone */
-            return;
+        if (e.touches.length === 1 && !two) {
+            start = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        } else if (e.touches.length === 2 && (start || !two)) {
+            start = null;               /* not a one-finger gesture now */
+            two = { from: midpoint(e.touches), to: midpoint(e.touches) };
+        } else {
+            start = null;               /* three fingers, or a lost touch */
+            two = { from: null, to: null };     /* ignore until all lift */
         }
-        start = { x: e.touches[0].clientX, y: e.touches[0].clientY };
         if (gestureScreen())
             e.stopPropagation();        /* not for the terminal's scrolling */
     }
 
     function onTouchMove(e) {
-        if (!start || !gestureScreen())
+        if (two && two.from && e.touches.length === 2)
+            two.to = midpoint(e.touches);
+        if (!(start || two) || !gestureScreen())
             return;
         /* keep the page from scrolling or refreshing under a swipe, and the
            terminal from scrolling its view */
@@ -230,9 +252,32 @@
             e.preventDefault();
     }
 
+    /* the key for a two-finger swipe, or null */
+    function twoFingerKey(dx, dy) {
+        if (mode !== "passage" || Math.abs(dy) <= Math.abs(dx) ||
+                Math.abs(dy) < TAP_MAX)
+            return null;
+        return dy < 0 ? "f" : "b";      /* up: the next book; down: back */
+    }
+
     function onTouchEnd(e) {
         var t, dx, dy, action, key;
 
+        if (two) {
+            if (e.touches.length > 0)
+                return;                 /* wait for the last finger */
+            key = two.from ? twoFingerKey(two.to.x - two.from.x,
+                                          two.to.y - two.from.y) : null;
+            two = null;
+            lastTouchEnd = Date.now();
+            if (key !== null) {
+                keepKeyboardHidden();
+                send(key);
+            }
+            if (e.cancelable)
+                e.preventDefault();     /* not a tap, not for the keyboard */
+            return;
+        }
         if (!start || e.changedTouches.length !== 1)
             return;
         t = e.changedTouches[0];
@@ -307,6 +352,10 @@
         el.addEventListener("touchstart", onTouchStart, { capture: true, passive: true });
         el.addEventListener("touchmove", onTouchMove, { capture: true, passive: false });
         el.addEventListener("touchend", onTouchEnd, { capture: true, passive: false });
+        el.addEventListener("touchcancel", function () {
+            start = null;
+            two = null;
+        }, true);
         el.addEventListener("click", onClick, true);
     }
 

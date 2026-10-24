@@ -55,7 +55,7 @@ On a phone or tablet, you only need the keyboard to type a search or a book, cha
 | Main menu | **Change**, **View**, **Search** or **Information**, or the blank line next to it (Exit isn't tappable) | — |
 | Choosing a translation | a translation | left or right: back, unchanged |
 | Search results | a result, anywhere on it: read it in context | up: next page · down: previous page · left or right: back |
-| Reading a passage | — | up or down: one verse · a long swipe: a whole screen · left or right: back to the results |
+| Reading a passage | — | up or down: one verse · a long swipe: a whole screen · with two fingers: the next or previous book · left or right: back to the results |
 | Typing a search | brings up the keyboard | down: your previous search · up: the next one (any length: one step) · left or right: the cursor one character · a long swipe left or right: to the start or end of the line |
 | Typing a book, chapter or verse | brings up the keyboard | left: erase the last character · a long swipe left: erase it all |
 | "Press any key" | anywhere | anywhere |

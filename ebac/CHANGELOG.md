@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.1.10
+
+- While reading, swipe up with two fingers to jump to the next book, or
+  down to go back to the previous one (like the **f** and **b** keys).
+  Any length works. So one finger moves a verse (or a screen, with a long
+  swipe), and two fingers a whole book.
+
 ## 2.1.9
 
 - Editing by swiping sideways:
