@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.1.13
+
+- The Information screen has a third page of diagnostic information:
+  EBaC's version (the commit it was built from and its date, and this
+  app's version), where it runs from, your search history file, the
+  terminal type (TERM) and window size, the terminal library, and the
+  system it runs on. The first page shows the commit too.
+- Built from EBaC commit `1cb910e`.
+
 ## 2.1.12
 
 - The Information screen's list of computers now says that EBaC ran on

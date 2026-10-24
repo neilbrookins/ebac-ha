@@ -14,7 +14,10 @@ ARG BUILD_FROM=ghcr.io/home-assistant/base:3.24-2026.10.1
 # ---- Stage 1: compile EBaC ----
 FROM ${BUILD_FROM} AS build
 
-ARG EBAC_COMMIT=49cfdc011547ce58e2624c3dc8fd6d6d9871ba39
+# BUILD_VERSION is this app's version, which Home Assistant passes to the
+# build; EBaC's Information screen shows it ("Home Assistant app 2.1.13").
+ARG BUILD_VERSION
+ARG EBAC_COMMIT=1cb910e5d7a494cba8a2e9ebe2325f9397f49898
 
 RUN apk add --no-cache build-base ncurses-dev tar
 
@@ -23,7 +26,7 @@ RUN apk add --no-cache build-base ncurses-dev tar
 WORKDIR /src
 RUN curl -fsSL "https://github.com/neilbrookins/ebac/archive/${EBAC_COMMIT}.tar.gz" \
         | tar -xz --strip-components=1 \
-    && make \
+    && make EBAC_PACKAGE="Home Assistant app${BUILD_VERSION:+ $BUILD_VERSION}" \
     && mkdir -p /out/AV \
     && cp bible /out/ \
     && cp trans /out/ \
