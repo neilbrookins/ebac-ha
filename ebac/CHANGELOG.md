@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1.7
+
+- The top of the list of search results can use the full width of the
+  screen, so a word one letter longer still gets its count on a phone.
+- Built from EBaC commit `33c482d`.
+
 ## 2.1.6
 
 - At the top of the list of search results, the counted word is
