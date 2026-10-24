@@ -23,6 +23,8 @@ Click the button above, or add the repository by hand:
 
 When a new version is released, Home Assistant shows an update for EBaC under **Settings → Apps** (and in **Settings → Updates**). Select it and choose **Update**. You don't need to remove or reinstall anything.
 
+Updates also come when the system software EBaC runs on is fixed, not only when EBaC changes. Each month, [`tools/check-deps.sh`](tools/check-deps.sh) checks Home Assistant's base image and the Alpine packages the app installs (the ttyd web terminal, ncurses and the libraries they use). If any has a newer version, it makes a new app version, so the fix reaches you as an ordinary update instead of waiting, unannounced, for the next rebuild. The versions the current app is built with are listed in [`ebac/dependencies.txt`](ebac/dependencies.txt).
+
 ## Supported hardware
 
 64-bit systems: Raspberry Pi 4 and 5 and other 64-bit ARM boards (`aarch64`), Home Assistant Green and Yellow, and PCs and virtual machines (`amd64`).

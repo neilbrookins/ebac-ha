@@ -1,0 +1,14 @@
+# The Alpine packages the EBaC app is built with, besides Home Assistant's
+# base image and EBaC itself (both pinned in Dockerfile). The Dockerfile
+# installs the newest of these at build time; this records the versions
+# the current app version was built with, so tools/check-deps.sh (run
+# monthly) can tell when Alpine has updated one and make a new version.
+# Written by tools/check-deps.sh --update; versions as in Alpine's
+# stable branch: package, its folder in Alpine's aports, version.
+ttyd             community/ttyd           1.7.7-r0
+libwebsockets    main/libwebsockets       4.3.5-r2
+json-c           main/json-c              0.18-r1
+libuv            main/libuv               1.52.1-r0
+zlib             main/zlib                1.3.2-r1
+openssl          main/openssl             3.5.9-r0
+ncurses          main/ncurses             6.6_p20260516-r0
