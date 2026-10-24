@@ -56,6 +56,7 @@ On a phone or tablet, you only need the keyboard to type a search or a book, cha
 | Choosing a translation | a translation | left or right: back, unchanged |
 | Search results | a result, anywhere on it: read it in context | up: next page · down: previous page · left or right: back |
 | Reading a passage | — | up or down: one verse · a long swipe: a whole screen · left or right: back to the results |
+| Typing a search | brings up the keyboard | down: your previous search · up: the next one (any length: one step) |
 | "Press any key" | anywhere | anywhere |
 
 Swiping up moves on to what comes next, as when scrolling. Tapping **View** or **Search** brings up the keyboard, since you type next; the other gestures don't. Tapping anywhere else brings up the keyboard, as before, so you can still use every key. If you hide the keyboard to see more of the screen, swiping and tapping keep it hidden; while it's showing, they leave it showing.

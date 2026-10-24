@@ -21,6 +21,9 @@
  *                                               a long swipe: next/previous
  *                                               screen; left/right: back (x)
  *   anykey    anywhere: a key ("Press any key") any: a key
+ *   search    -                                 down: the previous search in
+ *                                               the history, up: the next
+ *                                               (Up and Down arrows), any length
  *   input     -                                 -
  *
  * A tap this script uses doesn't bring up the keyboard, except on View and
@@ -175,6 +178,8 @@
         }
         if (mode === "list")
             return forward ? " " : "p";
+        if (mode === "search")      /* the history: Down and Up arrows */
+            return forward ? "\x0e" : "\x10";
         if (mode === "passage") {
             if (Math.abs(dy) >= LONG_SWIPE * height)
                 return forward ? " " : "p";     /* a screen */
@@ -185,7 +190,7 @@
 
     function gestureScreen() {
         return mode === "menu" || mode === "trans" || mode === "list" ||
-               mode === "passage" || mode === "anykey";
+               mode === "passage" || mode === "anykey" || mode === "search";
     }
 
     function onTouchStart(e) {

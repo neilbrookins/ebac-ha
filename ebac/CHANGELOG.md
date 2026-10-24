@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.1.8
+
+- At the search prompt, swipe down to bring back your previous search,
+  and up for the next one, like the Up and Down arrow keys. Each swipe
+  is one step, whatever its length, and keeps the keyboard hidden if it
+  was. Tap the screen to bring the keyboard back to edit or run it.
+- Built from EBaC commit `0624ec5`.
+
 ## 2.1.7
 
 - The top of the list of search results can use the full width of the
