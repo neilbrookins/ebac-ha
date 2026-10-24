@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.1.6
+
+- At the top of the list of search results, the counted word is
+  highlighted, as it is in the verses, instead of being in quotation
+  marks. This saves two columns, so on a phone a longer word still gets
+  its count.
+- Built from EBaC commit `2a2e12d`.
+
 ## 2.1.5
 
 - The top of the list of search results now says what its numbers are:
