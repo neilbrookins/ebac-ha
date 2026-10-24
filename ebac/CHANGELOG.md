@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1.12
+
+- The Information screen's list of computers now says that EBaC ran on
+  Windows with Cygwin, and that Windows 10 and 11 run it in WSL.
+- Built from EBaC commit `49cfdc0`.
+
 ## 2.1.11
 
 - Going back a book (**b**, or a two-finger swipe down) from Exodus, or
