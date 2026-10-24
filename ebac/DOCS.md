@@ -62,6 +62,12 @@ On a phone or tablet, you only need the keyboard to type a search or a book, cha
 
 Swiping up moves on to what comes next, as when scrolling. Tapping **View** or **Search** brings up the keyboard, since you type next; the other gestures don't. Tapping anywhere else brings up the keyboard, as before, so you can still use every key. If you hide the keyboard to see more of the screen, swiping and tapping keep it hidden; while it's showing, they leave it showing.
 
+### If you use the Home Assistant Companion app
+
+The Companion app has its own gestures, under **Settings → Companion app → Gestures**, and it acts on them as well as passing them to EBaC. If a two-finger swipe there is set to do something, such as refreshing the page, a two-finger swipe in EBaC does both: the Companion app's action first (a refresh asks whether to leave the page), and then EBaC's jump to the next or previous book.
+
+So that EBaC's two-finger swipes work properly, set the Companion app's **two-finger swipe up** and **two-finger swipe down** to **None**. (Two-finger swipes left and right, and three-finger gestures, aren't used by EBaC, so they can stay as they are.)
+
 ## Exiting
 
 Pressing **E** at the main menu exits EBaC. As with the Terminal app, the window greys out and offers **Press ⏎ to Reconnect**; press Enter to start EBaC again at the main menu.
