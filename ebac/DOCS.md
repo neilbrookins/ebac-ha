@@ -40,6 +40,8 @@ Type the words to search for, then Enter. Searches use postfix (reverse Polish) 
 
 A number means AND (`0` = in the same verse), `,` means OR, `-` means AND NOT, and `@` plus the start of a book's name means that book.
 
+The top of the list says how many verses were found. For a search of one word alone it also says how many times the word occurs, which can be more, since a verse may have it twice: `56 verses, "grass" 62 times`.
+
 In the list of results, press the label beside a verse (**1** to **9**, then **a**, **b**, ...) to read it in context, and **x** to come back to the list. The letters under the digits, **q w e r t y u i o**, also pick entries 1 to 9, so on a phone you never have to switch the on-screen keyboard to numbers. A label works even when its entry is below the bottom of the screen, so entries you saw while the keyboard was hidden can still be opened after it reappears.
 
 While typing a search, **Up** and **Down** bring back earlier searches. **Left**, **Right**, **Home**, **End** and **Delete** edit the line.

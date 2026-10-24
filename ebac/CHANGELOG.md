@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.1.5
+
+- The top of the list of search results now says what its numbers are:
+  **--Beginning of list-- 56 verses, "grass" 62 times**. The number of
+  times is shown only for a search of one word alone; with several words
+  or a book it would have counted the whole Bible, not this list, so
+  only the number of verses is shown. On a narrow screen the number of
+  times is left out rather than let the line wrap.
+- "Begining" is now spelled correctly.
+- Built from EBaC commit `61794e5`.
+
 ## 2.1.4
 
 - In the list of search results, the prompt at the bottom no longer
