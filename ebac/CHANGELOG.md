@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.1.11
+
+- Going back a book (**b**, or a two-finger swipe down) from Exodus, or
+  from anywhere in Genesis, now goes to Genesis 1:1, instead of a screen
+  of "This verse doesn't exist...". The same was fixed at the other end,
+  for the next book (**f**) and the next screen in Revelation.
+- At Genesis 1:1, going back a book or a verse beeps and stays; at the
+  end of Revelation, going on a book or a screen does the same. A passage
+  now stops after Revelation 22:21.
+- Built from EBaC commit `f0df8fd`.
+
 ## 2.1.10
 
 - While reading, swipe up with two fingers to jump to the next book, or
