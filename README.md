@@ -1,8 +1,13 @@
 # EBaC for Home Assistant
 
-This repository adds **EBaC, the Electronic Bible and Concordance**, to Home Assistant as an app. After installing it, an **EBaC** button appears in the Home Assistant sidebar. Clicking it opens EBaC in a terminal window inside Home Assistant, ready to read and search the Bible with the keyboard.
+> [!NOTE]
+> **You are looking at EBaC for Home Assistant.** [Home Assistant](https://www.home-assistant.io/) is a free smart-home system, often run on a small computer such as a Raspberry Pi and used through a web browser or its phone app. If you have it, this is the easiest way to get EBaC: there's nothing to type or build, it updates itself, and besides the keyboard it works by tapping, swiping and clicking, on a phone, a tablet or a computer's web browser.
+>
+> **Don't use Home Assistant?** This version needs it. To run EBaC directly on Linux (including the Raspberry Pi), a Mac or Solaris, in a terminal window with the keyboard, go to **[EBaC](https://github.com/neilbrookins/ebac)**, the main repository, which explains how to install it there.
 
-EBaC itself is developed at [neilbrookins/ebac](https://github.com/neilbrookins/ebac), where it also runs as a standalone program on Linux. This repository only packages it for Home Assistant.
+This repository adds **EBaC, the Electronic Bible and Concordance**, to Home Assistant as an app. After installing it, an **EBaC** button appears in the Home Assistant sidebar. Clicking it opens EBaC in a terminal window inside Home Assistant, ready to read and search the Bible with the keyboard, or by tapping, swiping and clicking.
+
+EBaC itself is developed at [neilbrookins/ebac](https://github.com/neilbrookins/ebac), where it also runs as a standalone program on Linux, macOS and Solaris. This repository only packages it for Home Assistant.
 
 ## Installing
 
