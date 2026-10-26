@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.1.16
+
+- Fix: after restarting EBaC, choosing an added translation under
+  **C** failed ("Can't chdir to ../RNKJV") and closed EBaC. Added
+  translations are found again, and a translation whose folder is
+  missing is now reported without closing EBaC.
+- Built from EBaC commit `8d7b42f`.
+
 ## 2.1.15
 
 - Add translations from EBaC's main menu: press **A** to choose from 31
