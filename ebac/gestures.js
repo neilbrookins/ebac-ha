@@ -63,9 +63,13 @@
 
     var MODE_OSC = 7766;    /* EBaC's "which screen" escape sequence */
     var TAP_MAX = 24;       /* px: a touch moving less than this is a tap */
-    var LONG_SWIPE = 0.3;   /* a swipe longer than this share of the
-                               terminal's height (or, sideways, its width)
-                               is a long one: a whole screen, say */
+    var LONG_SWIPE = 0.3;   /* a sideways swipe longer than this share of
+                               the terminal's width is a long one: to the
+                               start or end of the line, say */
+    var LONG_SCROLL = 0.2;  /* a swipe up or down in a passage longer than
+                               this share of the terminal's height is a long
+                               one: a whole screen (0.3 before 2.2.3, which
+                               took more of a swipe than seemed natural) */
 
     var mode = "";          /* the screen EBaC last said it was showing */
     var term = null;        /* the terminal being listened to */
@@ -414,7 +418,7 @@
         if (mode === "search")      /* the history: Down and Up arrows */
             return forward ? "\x0e" : "\x10";
         if (mode === "passage") {
-            if (Math.abs(dy) >= LONG_SWIPE * height)
+            if (Math.abs(dy) >= LONG_SCROLL * height)
                 return forward ? " " : "p";     /* a screen */
             return forward ? "." : ",";         /* a verse */
         }

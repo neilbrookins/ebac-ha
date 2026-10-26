@@ -1,5 +1,19 @@
 # Changelog
 
+## 2.2.3
+
+- **Numbers for Roman numerals in book names.** Most translations write
+  numbered books in Roman numerals (IThessalonians, IIIJohn); you can now
+  type the number instead, as in the King James Version: `2th` finds
+  IIThessalonians, `3` IIIJohn, and `1m` IMaccabees. The names are shown
+  as the translation writes them. This works at the book prompt and in
+  `@` searches (`faith @1co 0`), so a search works the same in every
+  translation.
+- **Shorter swipes turn a page.** In a passage, a swipe up or down of
+  about a fifth of the screen now turns a whole screen (it took nearly a
+  third before); a shorter one still moves one verse.
+- Built from EBaC commit `0fe4aef`.
+
 ## 2.2.2
 
 - With keyboards that hold back letters as a word being typed (such as
