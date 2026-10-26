@@ -9,6 +9,7 @@ Click inside the terminal window so it has the keyboard, then press a letter at 
 - **V** to view a passage: type the start of a book name, then the chapter and verse. For the numbers you can type the letters under the digits instead, **q w e r t y u i o p** for **1 2 3 4 5 6 7 8 9 0**, and **m** for a minus sign, so a phone's keyboard can stay on letters. Chapter and verse count from the start of the book, so **0** or a negative number counts back: John 3:0 is John 2:25, and Exodus chapter 0 is Genesis 50. Enter alone means 1.
 - **S** to search for words.
 - **C** to change translation.
+- **A** to add a translation: see [Adding translations](#adding-translations).
 - **I** for information about EBaC.
 - **E** to exit.
 
@@ -60,13 +61,19 @@ On a phone or tablet, you only need the keyboard to type a search or a book, cha
 | Typing a book, chapter or verse | brings up the keyboard | left: erase the last character · a long swipe left: erase it all |
 | "Press any key" | anywhere | anywhere |
 
-Swiping up moves on to what comes next, as when scrolling. Tapping **View** or **Search** brings up the keyboard, since you type next; the other gestures don't. Tapping anywhere else brings up the keyboard, as before, so you can still use every key. If you hide the keyboard to see more of the screen, swiping and tapping keep it hidden; while it's showing, they leave it showing.
+Swiping up moves on to what comes next, as when scrolling. Tapping **View**, **Search** or **Add a translation** brings up the keyboard, since you type next; the other gestures don't. Tapping anywhere else brings up the keyboard, as before, so you can still use every key. If you hide the keyboard to see more of the screen, swiping and tapping keep it hidden; while it's showing, they leave it showing.
 
 ### If you use the Home Assistant Companion app
 
 The Companion app has its own gestures, under **Settings → Companion app → Gestures**, and it acts on them as well as passing them to EBaC. If a two-finger swipe there is set to do something, such as refreshing the page, a two-finger swipe in EBaC does both: the Companion app's action first (a refresh asks whether to leave the page), and then EBaC's jump to the next or previous book.
 
 So that EBaC's two-finger swipes work properly, set the Companion app's **two-finger swipe up** and **two-finger swipe down** to **None**. (Two-finger swipes left and right, and three-finger gestures, aren't used by EBaC, so they can stay as they are.)
+
+## Adding translations
+
+The app comes with the King James Version. To add others, press **A** at the main menu: EBaC lists 31 English translations it can download, including the American Standard Version, the Berean Standard Bible, the Lexham English Bible, Young's Literal Translation, Darby, Webster, the Geneva Bible and Tyndale. Type the numbers of the ones you want, such as `6` or `6 14`, and press Enter (**n** and **p**, then Enter, turn the page; Enter alone goes back). Each one is downloaded and indexed in a few seconds, and then you are back at the main menu with the new translation chosen; **C** switches between them.
+
+Added translations are kept in this app's own storage, so they are kept when the app is updated, and they are included in Home Assistant's backups (about 6 MB for each whole Bible, 2 MB for a New Testament). They are available to every Home Assistant user. To download, Home Assistant needs to be connected to the Internet.
 
 ## Exiting
 

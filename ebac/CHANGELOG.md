@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.1.15
+
+- Add translations from EBaC's main menu: press **A** to choose from 31
+  English translations (such as the American Standard Version, the
+  Berean Standard Bible, the Lexham English Bible and Young's Literal
+  Translation), which are downloaded and indexed in a few seconds each.
+  They are kept in the app's own storage, so updates keep them, and
+  backups include them. Tapping **A** brings up the keyboard.
+- EBaC now runs from /data/ebac, which the app sets up at each start.
+- Built from EBaC commit `a800b41`.
+
 ## 2.1.14
 
 - EBaC can read translations from other sources (verse numbers like

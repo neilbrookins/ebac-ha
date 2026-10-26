@@ -11,7 +11,7 @@
  * in EBaC's curses.c), and the gestures depend on it:
  *
  *   screen    tap                              swipe
- *   menu      the nearest of C, V, S or I:      -
+ *   menu      the nearest of C, A, V, S or I:   -
  *             that key (never E, so a
  *             slightly missed tap can't exit)
  *   trans     a numbered translation: it        left/right: back, unchanged
@@ -37,8 +37,8 @@
  *   chapter,                                    whole entry (CTRL-U)
  *   verse)
  *
- * A tap this script uses doesn't bring up the keyboard, except on View and
- * Search in the main menu, which ask for typing next. Any other tap works
+ * A tap this script uses doesn't bring up the keyboard, except on View,
+ * Search and Add a translation in the main menu, which ask for typing next. Any other tap works
  * as before: it brings up the keyboard.
  *
  * The terminal's scrollback (the lines that have scrolled off the top) is
@@ -130,7 +130,7 @@
         var pos = rowPos(y), best = null, bestDist = 1, r, m, d;
 
         for (r = 0; r < term.rows; r++) {
-            m = /^\s*([CVSIE])\)/.exec(rowText(r));
+            m = /^\s*([CAVSIE])\)/.exec(rowText(r));
             if (!m)
                 continue;
             d = Math.abs(pos - (r + 0.5));
@@ -154,8 +154,9 @@
             if (!key || key === "E")
                 return null;
             key = key.toLowerCase();
-            /* View and Search ask for typing next: let the keyboard come up */
-            return { key: key, keyboard: key === "v" || key === "s" };
+            /* View, Search and Add ask for typing next: let the keyboard
+               come up */
+            return { key: key, keyboard: key === "v" || key === "s" || key === "a" };
         case "trans":
             m = /^\s*([1-9])\)/.exec(rowText(row));
             return m ? { key: m[1], keyboard: false } : null;

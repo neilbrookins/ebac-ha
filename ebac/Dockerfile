@@ -17,19 +17,22 @@ FROM ${BUILD_FROM} AS build
 # BUILD_VERSION is this app's version, which Home Assistant passes to the
 # build; EBaC's Information screen shows it ("Home Assistant app 2.1.13").
 ARG BUILD_VERSION
-ARG EBAC_COMMIT=ce8e59bf23420f81d07a24978afb5205331ac052
+ARG EBAC_COMMIT=a800b41da24e85aa5a66ab67fb408b97624990b0
 
 RUN apk add --no-cache build-base ncurses-dev tar
 
 # "make" builds the program and also each translation's concordance
 # index (the .dat files in AV), which isn't stored in the EBaC repository.
+# The index program and the translation importer (add-translation.sh, for
+# A)dd a translation) are kept too, and index.version identifies the index
+# program's source, so that ebac-setup can tell when an update changes it.
 WORKDIR /src
 RUN curl -fsSL "https://github.com/neilbrookins/ebac/archive/${EBAC_COMMIT}.tar.gz" \
         | tar -xz --strip-components=1 \
     && make EBAC_PACKAGE="Home Assistant app${BUILD_VERSION:+ $BUILD_VERSION}" \
     && mkdir -p /out/AV \
-    && cp bible /out/ \
-    && cp trans /out/ \
+    && cp bible index add-translation.sh trans /out/ \
+    && cat index.c both.h | sha256sum | cut -c1-64 > /out/index.version \
     && cp AV/* /out/AV/
 
 # ---- Stage 2: the app ----
@@ -37,9 +40,13 @@ FROM ${BUILD_FROM}
 
 # ttyd is the web terminal used by Home Assistant's own Terminal app.
 # ncurses-terminfo-base describes ttyd's terminal (xterm-256color).
-RUN apk add --no-cache ttyd ncurses-libs ncurses-terminfo-base
+# The translation importer needs only BusyBox (its sh and awk) and curl
+# with ca-certificates, to download (the base image has those already).
+RUN apk add --no-cache ttyd ncurses-libs ncurses-terminfo-base curl ca-certificates
 
-# EBaC's files: the program, the 'trans' list and the King James text.
+# EBaC's files: the program, the 'trans' list, the King James text, the
+# index program and the translation importer. (EBaC itself runs from
+# /data/ebac, which links to these: see ebac-setup.)
 COPY --from=build /out /usr/share/ebac
 
 # ttyd's web page, with touch gestures added (taps and swipes on a phone

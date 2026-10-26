@@ -9,14 +9,16 @@
 # ==============================================================================
 bashio::log.info "Starting EBaC..."
 
-# Where EBaC's files are (the program, 'trans' and the AV folder).
-export BIBLEROOT=/usr/share/ebac
-
 # /data is the app's own storage, kept across restarts, updates and
 # backups. Each user's search history goes in /data/users/NAME; see
 # /usr/bin/ebac-session.
 mkdir -p /data/users
 cd /data || bashio::exit.nok "Can't find the /data folder!"
+
+# EBaC's folder: /data/ebac, holding the translations users add (A on the
+# main menu) and links to the app's own files; see /usr/bin/ebac-setup.
+/usr/bin/ebac-setup || bashio::exit.nok "Can't set up /data/ebac!"
+export BIBLEROOT=/data/ebac
 
 # --auth-header: Home Assistant's ingress adds the logged-in user's name in
 # X-Remote-User-Name; ttyd passes it to ebac-session as TTYD_USER (and

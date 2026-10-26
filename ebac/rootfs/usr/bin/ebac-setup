@@ -1,0 +1,90 @@
+#!/bin/sh
+# ==============================================================================
+# Prepare EBaC's folder (BIBLEROOT) in the app's own storage, at each start.
+#
+# The app's image holds EBaC as built: the program, its 'trans' list, the
+# King James text (AV), the translation importer (add-translation.sh) and
+# the index program. The image is replaced when the app is updated, so
+# translations the user adds (A on EBaC's main menu) are kept in
+# /data/ebac instead, which Home Assistant keeps across restarts and
+# updates, and includes in backups. This makes /data/ebac a complete EBaC
+# folder:
+#
+#   - the image's translations, importer and index program, as links into
+#     the image (made again at each start, so they follow updates);
+#   - the translations the user added, as folders of their own;
+#   - 'trans': the image's list, followed by the added translations (any
+#     whose folder has gone are left out).
+#
+# When an update brings a different index program (index.version in the
+# image changes), the added translations' indexes are built again, so they
+# always match the EBaC that reads them.
+#
+# EBAC_IMAGE and EBAC_ROOT override the two folders (for testing).
+# ==============================================================================
+set -f
+image=${EBAC_IMAGE:-/usr/share/ebac}
+root=${EBAC_ROOT:-/data/ebac}
+
+mkdir -p "$root" || exit 1
+
+# link NAME: make root/NAME a link to image/NAME (unless it is a real file
+# or folder of the user's, which is left alone)
+link() {
+    if [ -L "$root/$1" ] || [ ! -e "$root/$1" ]; then
+        rm -f "$root/$1"
+        ln -s "$image/$1" "$root/$1"
+    fi
+}
+
+# The folders 'trans' lists in FILE, one per line.
+names() {
+    awk '$1 != "" && substr($1, 1, 1) != "#" { print $1 }' "$1"
+}
+
+link add-translation.sh
+link index
+built_in=$(names "$image/trans")
+for name in $built_in; do
+    link "$name"
+done
+
+# A translation the user added: a real folder here (not a link into the
+# image), with its booklist.
+added() {
+    [ -f "$root/$1/booklist" ] && [ ! -L "$root/$1" ] &&
+        ! printf '%s\n' "$built_in" | grep -x -F -e "$1" > /dev/null
+}
+
+# 'trans': the image's list, then the added translations, in their order
+{
+    cat "$image/trans"
+    if [ -f "$root/trans" ]; then
+        while IFS= read -r line; do
+            set -- $line
+            [ $# -gt 0 ] || continue
+            case $1 in "#"*) continue ;; esac
+            if added "$1"; then
+                printf '%s\n' "$line"
+            fi
+        done < "$root/trans"
+    fi
+} > "$root/trans.new" || exit 1
+mv "$root/trans.new" "$root/trans" || exit 1
+
+# A different index program: index the added translations again
+if [ -f "$image/index.version" ] &&
+   ! cmp -s "$image/index.version" "$root/.index-version"; then
+    ok=yes
+    for name in $(names "$root/trans"); do
+        if added "$name"; then
+            echo "Indexing $name again, for this version of EBaC..."
+            if ! (cd "$root/$name" && "$image/index" -y > /dev/null); then
+                echo "Indexing $name failed."
+                ok=no           # (so it is tried again at the next start)
+            fi
+        fi
+    done
+    [ $ok = yes ] && cp "$image/index.version" "$root/.index-version"
+fi
+exit 0
