@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.1.20
+
+- In the Home Assistant Companion app, turning the phone takes the
+  keyboard focus away from the page altogether (a problem in the app,
+  which no web page can undo), so what is typed goes nowhere until the
+  screen is tapped. EBaC now shows a **Tap here to type** bar when that
+  happens with the keyboard up; it goes as soon as the focus is back.
+
 ## 2.1.19
 
 - When the phone is turned and EBaC's page loses the keyboard focus to

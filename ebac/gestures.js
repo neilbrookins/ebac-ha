@@ -212,13 +212,76 @@
     }
 
     function onBlur() {
-        debug("box blur" + (lettingGo ? " (ours)" : "") + ", " +
-              (Date.now() - widthChanged) + " ms after width change");
+        debug("box blur" + (lettingGo ? " (ours)" : "") +
+              (widthChanged ? ", " + (Date.now() - widthChanged) + " ms after width change" : ""));
         if (lettingGo)
             return;
         focusLost = Date.now();
         if (focusLost - widthChanged < ROTATE_TIME)
             refocus();
+    }
+
+    /*
+    ** When the phone's own focus leaves the web page altogether (in the
+    ** Home Assistant Companion app, turning the phone does this), no script
+    ** can bring it back: only a touch can. The keyboard stays up for a few
+    ** seconds, but what is typed goes nowhere. So if the page loses the
+    ** focus while the keyboard is showing, and neither it nor Home
+    ** Assistant's page around it has the focus, a bar asks for a tap; it
+    ** goes as soon as the focus comes back.
+    */
+    var tapBar = null;
+
+    function topHasFocus() {
+        try {
+            return window.parent !== window && window.parent.document.hasFocus();
+        } catch (err) {
+            return false;
+        }
+    }
+
+    function showTapBar() {
+        if (!tapBar) {
+            tapBar = document.createElement("div");
+            tapBar.textContent = "Tap here to type";
+            tapBar.style.cssText = "position:fixed;left:0;right:0;bottom:0;z-index:99998;" +
+                "padding:10px;text-align:center;font:bold 16px sans-serif;" +
+                "background:#ffd54f;color:#000;";
+            /* a tap on the bar is a tap on the terminal: bring up the keyboard */
+            tapBar.addEventListener("click", function () {
+                hideTapBar();
+                if (term)
+                    term.focus();
+            });
+        }
+        if (!tapBar.parentNode && document.body)
+            document.body.appendChild(tapBar);
+        debug("tap bar shown");
+    }
+
+    function hideTapBar() {
+        if (tapBar && tapBar.parentNode) {
+            tapBar.parentNode.removeChild(tapBar);
+            debug("tap bar hidden");
+        }
+    }
+
+    function onPageBlur() {
+        var keyboardUp;
+
+        noteHeight();
+        keyboardUp = windowHeight() < 0.85 * fullHeight[window.innerWidth];
+        if (lettingGo || !keyboardUp || !term ||
+                document.activeElement !== term.textarea ||
+                document.visibilityState !== "visible")
+            return;
+        /* (a moment later: the focus may be on its way to somewhere else in
+           the page, such as Home Assistant's own menu) */
+        setTimeout(function () {
+            if (!document.hasFocus() && !topHasFocus() &&
+                    document.visibilityState === "visible")
+                showTapBar();
+        }, 300);
     }
 
     function noteWidth() {
@@ -542,6 +605,12 @@
     noteHeight();
     window.addEventListener("resize", noteHeight);
     window.addEventListener("resize", noteWidth);
+    window.addEventListener("blur", onPageBlur);
+    window.addEventListener("focus", hideTapBar);
+    document.addEventListener("visibilitychange", function () {
+        if (document.visibilityState !== "visible")
+            hideTapBar();
+    });
     if (window.EBAC_DEBUG) {
         debug("page loaded, " + window.innerWidth + "x" + window.innerHeight);
         window.addEventListener("blur", function () { debug("page blur, " + focusState()); });

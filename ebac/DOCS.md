@@ -69,6 +69,8 @@ The Companion app has its own gestures, under **Settings → Companion app → G
 
 So that EBaC's two-finger swipes work properly, set the Companion app's **two-finger swipe up** and **two-finger swipe down** to **None**. (Two-finger swipes left and right, and three-finger gestures, aren't used by EBaC, so they can stay as they are.)
 
+Turning the phone in the Companion app takes the keyboard away from the page altogether: the keyboard stays up for a moment, but what you type goes nowhere. This happens in the Companion app itself, and no web page can undo it, so EBaC shows a **Tap here to type** bar instead: tap anywhere on EBaC and typing works again.
+
 ## Adding translations
 
 The app comes with the King James Version. To add others, press **A** at the main menu: EBaC lists 31 English translations it can download, including the American Standard Version, the Berean Standard Bible, the Lexham English Bible, Young's Literal Translation, Darby, Webster, the Geneva Bible and Tyndale. Type the numbers of the ones you want, such as `6` or `6 14`, and press Enter (**n** and **p**, then Enter, turn the page; Enter alone goes back). Each one is downloaded and indexed in a few seconds, and then you are back at the main menu with the new translation chosen; **C** switches between them.
