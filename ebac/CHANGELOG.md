@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.1.22
+
+- In the list of translations to add, those already added are marked
+  with a `*` before the number, instead of "(added)" after the title,
+  so more of each title fits.
+- A translation you add now becomes the one EBaC starts with every
+  time, not only the first time after adding it. The app keeps the order
+  of the translation list across restarts and updates.
+- Built from EBaC commit `5ea60c1`.
+
 ## 2.1.21
 
 - Fix: the **Tap here to type** bar didn't appear when the phone was

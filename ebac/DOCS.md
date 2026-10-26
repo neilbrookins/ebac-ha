@@ -73,7 +73,7 @@ Turning the phone in the Companion app takes the keyboard away from the page alt
 
 ## Adding translations
 
-The app comes with the King James Version. To add others, press **A** at the main menu: EBaC lists 31 English translations it can download, including the American Standard Version, the Berean Standard Bible, the Lexham English Bible, Young's Literal Translation, Darby, Webster, the Geneva Bible and Tyndale. Type the numbers of the ones you want, such as `6` or `6 14`, and press Enter (**n** and **p**, then Enter, turn the page; Enter alone goes back). Each one is downloaded and indexed in a few seconds, and then you are back at the main menu with the new translation chosen; **C** switches between them.
+The app comes with the King James Version. To add others, press **A** at the main menu: EBaC lists 31 English translations it can download, including the American Standard Version, the Berean Standard Bible, the Lexham English Bible, Young's Literal Translation, Darby, Webster, the Geneva Bible and Tyndale. Type the numbers of the ones you want, such as `6` or `6 14`, and press Enter (**n** and **p**, then Enter, turn the page; Enter alone goes back). Those already added are marked with a `*`. Each one is downloaded and indexed in a few seconds, and then you are back at the main menu with the new translation chosen; EBaC starts with it from then on, and **C** switches between them.
 
 Added translations are kept in this app's own storage, so they are kept when the app is updated, and they are included in Home Assistant's backups (about 6 MB for each whole Bible, 2 MB for a New Testament). They are available to every Home Assistant user. To download, Home Assistant needs to be connected to the Internet.
 
