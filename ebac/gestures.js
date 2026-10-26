@@ -79,6 +79,40 @@
     var ROTATE_TIME = 1500; /* ms: a lost focus this close to a change in
                                width comes from turning the phone */
 
+    /*
+    ** Troubleshooting: with the app's "debug_overlay" option on, the page
+    ** is given window.EBAC_DEBUG, and a small box in the top right corner
+    ** lists what this script sees: the focus coming and going, the window
+    ** changing size, and its attempts to take the focus back. (For a phone
+    ** whose behaviour can't be reproduced elsewhere: a screenshot shows it.)
+    */
+    var debugBox = null, debugLines = [], debugStart = Date.now();
+
+    function debug(text) {
+        if (!window.EBAC_DEBUG)
+            return;
+        if (!debugBox && document.body) {
+            debugBox = document.createElement("div");
+            debugBox.style.cssText = "position:fixed;top:0;right:0;z-index:99999;" +
+                "max-width:65%;padding:3px 5px;font:10px/1.25 monospace;" +
+                "white-space:pre;overflow:hidden;pointer-events:none;" +
+                "background:rgba(255,255,160,0.85);color:#000";
+            document.body.appendChild(debugBox);
+        }
+        debugLines.push(((Date.now() - debugStart) / 1000).toFixed(1) + " " + text);
+        if (debugLines.length > 16)
+            debugLines.shift();
+        if (debugBox)
+            debugBox.textContent = debugLines.join("\n");
+    }
+
+    /* the focus, in short: page focused (P) or not (p), and what has it */
+    function focusState() {
+        var a = document.activeElement;
+        return (document.hasFocus() ? "P " : "p ") +
+            (term && a === term.textarea ? "box" : a ? a.tagName.toLowerCase() : "none");
+    }
+
     function send(key) {
         term.input(key, true);
     }
@@ -124,19 +158,28 @@
     */
     function refocus() {
         focusLost = 0;
-        setTimeout(function () {
-            if (!term || !term.textarea ||
-                    (document.hasFocus() && document.activeElement === term.textarea))
-                return;
-            /* the focus may have gone out of this page altogether (to the
-               Home Assistant page around it), with the typing box still
-               this page's active element: take the focus back first */
-            window.focus();
-            term.focus();
-        }, 50);
+        /* (tried a few times: the focus may be taken more than once while
+           the phone turns) */
+        [50, 400, 1200].forEach(function (delay) {
+            setTimeout(function () {
+                if (!term || !term.textarea ||
+                        (document.hasFocus() && document.activeElement === term.textarea))
+                    return;
+                /* the focus may have gone out of this page altogether (to
+                   the Home Assistant page around it), with the typing box
+                   still this page's active element: take the focus back
+                   first */
+                debug("refocus @" + delay + ": " + focusState());
+                window.focus();
+                term.focus();
+                debug("  now " + focusState());
+            }, delay);
+        });
     }
 
     function onBlur() {
+        debug("box blur" + (lettingGo ? " (ours)" : "") + ", " +
+              (Date.now() - widthChanged) + " ms after width change");
         if (lettingGo)
             return;
         focusLost = Date.now();
@@ -145,6 +188,9 @@
     }
 
     function noteWidth() {
+        debug("resize " + window.innerWidth + "x" + window.innerHeight +
+              (window.visualViewport ? " vv " + Math.round(window.visualViewport.height) : "") +
+              ", " + focusState());
         if (window.innerWidth === lastWidth)
             return;
         lastWidth = window.innerWidth;
@@ -420,7 +466,10 @@
         el.addEventListener("click", onClick, true);
         if (t.textarea) {
             t.textarea.addEventListener("blur", onBlur);
-            t.textarea.addEventListener("focus", function () { focusLost = 0; });
+            t.textarea.addEventListener("focus", function () {
+                focusLost = 0;
+                debug("box focus");
+            });
         }
     }
 
@@ -459,6 +508,21 @@
     noteHeight();
     window.addEventListener("resize", noteHeight);
     window.addEventListener("resize", noteWidth);
+    if (window.EBAC_DEBUG) {
+        debug("page loaded, " + window.innerWidth + "x" + window.innerHeight);
+        window.addEventListener("blur", function () { debug("page blur, " + focusState()); });
+        window.addEventListener("focus", function () { debug("page focus, " + focusState()); });
+        document.addEventListener("visibilitychange", function () {
+            debug("visibility " + document.visibilityState);
+        });
+        window.addEventListener("orientationchange", function () { debug("orientationchange"); });
+        window.addEventListener("pagehide", function () { debug("pagehide"); });
+        window.addEventListener("pageshow", function () { debug("pageshow"); });
+        document.addEventListener("focusin", function (e) {
+            if (!term || e.target !== term.textarea)
+                debug("focusin " + e.target.tagName.toLowerCase());
+        });
+    }
     if (window.visualViewport)
         window.visualViewport.addEventListener("resize", noteHeight);
 

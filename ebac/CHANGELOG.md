@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.1.18
+
+- New option for troubleshooting, **Troubleshooting box**
+  (`debug_overlay`, off by default): a box in the corner of EBaC's page
+  lists what it sees of the keyboard focus and the window's size, to
+  help find problems on a particular phone.
+- When the phone is turned, taking the keyboard focus back is tried a
+  few times over a second, not once.
+
 ## 2.1.17
 
 - Fix: turning the phone could take the keyboard away from EBaC: the

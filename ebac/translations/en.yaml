@@ -1,0 +1,7 @@
+configuration:
+  debug_overlay:
+    name: Troubleshooting box
+    description: >-
+      Shows a box in the corner of EBaC's page listing what it sees of the
+      keyboard focus and the window's size, to help find problems on a
+      particular phone. Leave it off normally.

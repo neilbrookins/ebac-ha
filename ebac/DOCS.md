@@ -83,6 +83,10 @@ Pressing **E** at the main menu exits EBaC. As with the Terminal app, the window
 
 Earlier searches are saved in this app's own storage, so they are kept when Home Assistant restarts, when the app is updated, and in backups. Each Home Assistant user has their own history: what one person searches for is not shown to anyone else.
 
+## Troubleshooting
+
+The **Troubleshooting box** option, under this app's **Configuration** tab, shows a small box in the top right corner of EBaC's page listing what the page sees of the keyboard focus and the window's size (for example, when the phone is turned). A screenshot of it helps track down a problem that happens on one phone but not another. After changing the option, restart the app; leave it off normally.
+
 ## About
 
 EBaC was written by Neil G. Brookins. The source code, and a standalone version for Linux, are at [github.com/neilbrookins/ebac](https://github.com/neilbrookins/ebac).
