@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1.21
+
+- Fix: the **Tap here to type** bar didn't appear when the phone was
+  turned, because the keyboard was judged at the new width, as if it
+  weren't up. Whether the keyboard is up is now kept through a turn.
+
 ## 2.1.20
 
 - In the Home Assistant Companion app, turning the phone takes the

@@ -72,12 +72,12 @@
                                midpoint began, and where it is now */
     var lastTouchEnd = 0;   /* to ignore the click a browser adds after a tap */
     var fullHeight = {};    /* the tallest the window has been, per width */
+    var ROTATE_TIME = 1500; /* ms: a lost focus this close to a change in
+                               width comes from turning the phone */
     var lettingGo = false;  /* this script is taking the focus away itself */
     var lastWidth = window.innerWidth;
     var widthChanged = 0;   /* when the window's width last changed */
     var focusLost = 0;      /* when the typing box last lost the focus */
-    var ROTATE_TIME = 1500; /* ms: a lost focus this close to a change in
-                               width comes from turning the phone */
 
     /*
     ** Troubleshooting: with the app's "debug_overlay" option on, the page
@@ -145,11 +145,21 @@
                                      : window.innerHeight;
     }
 
-    /* remember the window's full height (no keyboard) for this width */
+    var keyboardUp = false;     /* as of the last resize */
+    var firstSeen = {};         /* when each width was first seen */
+
+    /* remember the window's full height (no keyboard) for this width, and
+       whether the keyboard is up. (Not judged for a width first seen in the
+       last moment, as while the phone turns: its full height isn't known
+       yet, so the keyboard is taken to be as it was.) */
     function noteHeight() {
-        var w = window.innerWidth, h = windowHeight();
+        var w = window.innerWidth, h = windowHeight(), now = Date.now();
         if (!fullHeight[w] || h > fullHeight[w])
             fullHeight[w] = h;
+        if (!firstSeen[w])
+            firstSeen[w] = now;
+        if (now - firstSeen[w] > ROTATE_TIME)
+            keyboardUp = h < 0.85 * fullHeight[w];
     }
 
     /* before a gesture that needs no typing: if the typing box is focused
@@ -267,10 +277,7 @@
     }
 
     function onPageBlur() {
-        var keyboardUp;
-
-        noteHeight();
-        keyboardUp = windowHeight() < 0.85 * fullHeight[window.innerWidth];
+        debug("blur check: keyboard " + (keyboardUp ? "up" : "down"));
         if (lettingGo || !keyboardUp || !term ||
                 document.activeElement !== term.textarea ||
                 document.visibilityState !== "visible")
@@ -602,6 +609,7 @@
         }
     }());
     setInterval(check, 50);
+    firstSeen[window.innerWidth] = 1;   /* (the starting width: not turning) */
     noteHeight();
     window.addEventListener("resize", noteHeight);
     window.addEventListener("resize", noteWidth);
