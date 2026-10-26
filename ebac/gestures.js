@@ -94,23 +94,45 @@
         if (!debugBox && document.body) {
             debugBox = document.createElement("div");
             debugBox.style.cssText = "position:fixed;top:0;right:0;z-index:99999;" +
-                "max-width:65%;padding:3px 5px;font:10px/1.25 monospace;" +
+                "max-width:70%;padding:2px 4px;font:9px/1.2 monospace;" +
                 "white-space:pre;overflow:hidden;pointer-events:none;" +
                 "background:rgba(255,255,160,0.85);color:#000";
             document.body.appendChild(debugBox);
         }
         debugLines.push(((Date.now() - debugStart) / 1000).toFixed(1) + " " + text);
-        if (debugLines.length > 16)
+        if (debugLines.length > 32)
             debugLines.shift();
         if (debugBox)
             debugBox.textContent = debugLines.join("\n");
     }
 
-    /* the focus, in short: page focused (P) or not (p), and what has it */
+    /* the element with the focus in a document, looking inside shadow roots
+       (as Home Assistant's page uses them) */
+    function deepActive(doc) {
+        var a = doc.activeElement;
+        while (a && a.shadowRoot && a.shadowRoot.activeElement)
+            a = a.shadowRoot.activeElement;
+        return a;
+    }
+
+    /* the focus, in short: this page focused (P) or not (p) and what has it;
+       then Home Assistant's page around it (T or t) and what has it there */
     function focusState() {
-        var a = document.activeElement;
-        return (document.hasFocus() ? "P " : "p ") +
+        var a = document.activeElement, text, top;
+
+        text = (document.hasFocus() ? "P " : "p ") +
             (term && a === term.textarea ? "box" : a ? a.tagName.toLowerCase() : "none");
+        try {
+            if (window.parent !== window) {
+                top = window.parent.document;
+                a = deepActive(top);
+                text += " / " + (top.hasFocus() ? "T " : "t ") +
+                    (a ? a.tagName.toLowerCase() + (a.id ? "#" + a.id : "") : "none");
+            }
+        } catch (err) {
+            text += " / ?";             /* (another origin: can't see it) */
+        }
+        return text;
     }
 
     function send(key) {
@@ -172,7 +194,19 @@
                 debug("refocus @" + delay + ": " + focusState());
                 window.focus();
                 term.focus();
-                debug("  now " + focusState());
+                if (!document.hasFocus() && window.frameElement) {
+                    /* through Home Assistant's page: give the focus to the
+                       frame this page is in, and then to the typing box */
+                    try {
+                        window.frameElement.focus();
+                        term.focus();
+                    } catch (err) {
+                        /* (not allowed: nothing more to try) */
+                    }
+                    debug("  via frame: " + focusState());
+                } else {
+                    debug("  now " + focusState());
+                }
             }, delay);
         });
     }

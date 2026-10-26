@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.1.19
+
+- When the phone is turned and EBaC's page loses the keyboard focus to
+  the Home Assistant page around it, it is also taken back through that
+  page (by focusing the frame EBaC's page is in).
+- The troubleshooting box shows more lines, and where the Home Assistant
+  page around EBaC has the focus.
+
 ## 2.1.18
 
 - New option for troubleshooting, **Troubleshooting box**
