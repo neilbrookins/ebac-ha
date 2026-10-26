@@ -15,6 +15,9 @@
  *             that key (never E, so a
  *             slightly missed tap can't exit)
  *   trans     a numbered translation: it        left/right: back, unchanged
+ *   transenter  (more than 9 translations, shown a page at a time)
+ *             a numbered translation: its       up/down: next/previous page;
+ *             number and Enter                  left/right: back, unchanged
  *   list      a result (any line of it): its    up: next page, down: previous
  *             label                             left/right: back (x)
  *   passage   -                                 up/down: next/previous verse;
@@ -156,6 +159,9 @@
         case "trans":
             m = /^\s*([1-9])\)/.exec(rowText(row));
             return m ? { key: m[1], keyboard: false } : null;
+        case "transenter":
+            m = /^\s*([0-9]+)\)/.exec(rowText(row));
+            return m ? { key: m[1] + "\r", keyboard: false } : null;
         case "list":
             /* a result's label is on its first line; its other lines start
                with spaces. Anything else (the header, "--More--", a blank
@@ -185,7 +191,8 @@
         if (mode === "anykey")
             return " ";
         if (Math.abs(dx) > Math.abs(dy)) {      /* left or right */
-            if (mode === "passage" || mode === "list" || mode === "trans")
+            if (mode === "passage" || mode === "list" || mode === "trans" ||
+                    mode === "transenter")
                 return "x";                     /* back */
             if (mode === "search") {            /* move the cursor */
                 if (dx < 0)
@@ -196,7 +203,7 @@
                 return longSide ? "\x15" : "\b";        /* CTRL-U, Backspace */
             return null;
         }
-        if (mode === "list")
+        if (mode === "list" || mode === "transenter")
             return forward ? " " : "p";
         if (mode === "search")      /* the history: Down and Up arrows */
             return forward ? "\x0e" : "\x10";
@@ -209,7 +216,8 @@
     }
 
     function gestureScreen() {
-        return mode === "menu" || mode === "trans" || mode === "list" ||
+        return mode === "menu" || mode === "trans" || mode === "transenter" ||
+               mode === "list" ||
                mode === "passage" || mode === "anykey" || mode === "search" ||
                mode === "input";
     }

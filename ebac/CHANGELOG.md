@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.1.14
+
+- EBaC can read translations from other sources (verse numbers like
+  [1:1], longer verses, a few more verses than the King James), and its
+  Change translation screen pages through a long list of translations.
+  The touch gestures support that screen: tap a translation, swipe up or
+  down for the next or previous page, sideways to go back.
+- Built from EBaC commit `ce8e59b`.
+
 ## 2.1.13
 
 - The Information screen has a third page of diagnostic information:
