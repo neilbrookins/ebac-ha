@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1.25
+
+- After adding or removing translations, EBaC waits for a key (or a tap)
+  before going back to the main menu, so you can read what happened.
+- Built from EBaC commit `ba1ad1c`.
+
 ## 2.1.24
 
 - Fix: tapping **A** with the keyboard hidden could leave the top of the
