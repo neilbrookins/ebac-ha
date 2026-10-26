@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.1.17
+
+- Fix: turning the phone could take the keyboard away from EBaC: the
+  keyboard stayed up, but nothing typed reached EBaC (the cursor showed
+  as an outline) until the screen was tapped. If the terminal loses the
+  keyboard as the phone is turned, it now takes it back at once.
+- The main menu is drawn again when the window changes size, such as when
+  the phone is turned, as passages and lists already were.
+- Built from EBaC commit `a94dbf4`.
+
 ## 2.1.16
 
 - Fix: after restarting EBaC, choosing an added translation under

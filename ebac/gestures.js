@@ -72,6 +72,12 @@
                                midpoint began, and where it is now */
     var lastTouchEnd = 0;   /* to ignore the click a browser adds after a tap */
     var fullHeight = {};    /* the tallest the window has been, per width */
+    var lettingGo = false;  /* this script is taking the focus away itself */
+    var lastWidth = window.innerWidth;
+    var widthChanged = 0;   /* when the window's width last changed */
+    var focusLost = 0;      /* when the typing box last lost the focus */
+    var ROTATE_TIME = 1500; /* ms: a lost focus this close to a change in
+                               width comes from turning the phone */
 
     function send(key) {
         term.input(key, true);
@@ -97,8 +103,54 @@
         var box = term.textarea;
         noteHeight();
         if (box && document.activeElement === box &&
-                windowHeight() >= 0.85 * fullHeight[window.innerWidth])
+                windowHeight() >= 0.85 * fullHeight[window.innerWidth]) {
+            lettingGo = true;
             box.blur();
+            lettingGo = false;
+        }
+    }
+
+    /*
+    ** Keep the keyboard working when the phone is turned. Home Assistant
+    ** lays its page out again when the window's width crosses 870 px (its
+    ** sidebar changes between a pop-over and a docked one), as a phone's
+    ** does when turned sideways, and that moves the panel this page is in;
+    ** the browser then takes the focus from the terminal's typing box. The
+    ** keyboard stays up, but what is typed goes nowhere (the cursor shows
+    ** as an outline). So when the typing box loses the focus close to a
+    ** change in the window's width, and this script didn't let go of it,
+    ** it is given the focus back. (A change in height alone, such as the
+    ** keyboard coming or going, is left alone.)
+    */
+    function refocus() {
+        focusLost = 0;
+        setTimeout(function () {
+            if (!term || !term.textarea ||
+                    (document.hasFocus() && document.activeElement === term.textarea))
+                return;
+            /* the focus may have gone out of this page altogether (to the
+               Home Assistant page around it), with the typing box still
+               this page's active element: take the focus back first */
+            window.focus();
+            term.focus();
+        }, 50);
+    }
+
+    function onBlur() {
+        if (lettingGo)
+            return;
+        focusLost = Date.now();
+        if (focusLost - widthChanged < ROTATE_TIME)
+            refocus();
+    }
+
+    function noteWidth() {
+        if (window.innerWidth === lastWidth)
+            return;
+        lastWidth = window.innerWidth;
+        widthChanged = Date.now();
+        if (focusLost && widthChanged - focusLost < ROTATE_TIME)
+            refocus();
     }
 
     /* the text on a row of the screen, 0 = top */
@@ -366,6 +418,10 @@
             two = null;
         }, true);
         el.addEventListener("click", onClick, true);
+        if (t.textarea) {
+            t.textarea.addEventListener("blur", onBlur);
+            t.textarea.addEventListener("focus", function () { focusLost = 0; });
+        }
     }
 
     function check() {
@@ -402,6 +458,7 @@
     setInterval(check, 50);
     noteHeight();
     window.addEventListener("resize", noteHeight);
+    window.addEventListener("resize", noteWidth);
     if (window.visualViewport)
         window.visualViewport.addEventListener("resize", noteHeight);
 
