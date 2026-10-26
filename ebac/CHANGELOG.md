@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.1.23
+
+- Remove translations you added: under **A** (now "Add or remove a
+  translation"), type **r** and the number, such as `r6`. Adding and
+  removing can be mixed in one line, such as `r10 11 13`.
+- Choosing a translation you've already added downloads a fresh copy
+  and makes it the one EBaC starts with.
+- Built from EBaC commit `50bdb5a`.
+
 ## 2.1.22
 
 - In the list of translations to add, those already added are marked

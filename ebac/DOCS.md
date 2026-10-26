@@ -9,7 +9,7 @@ Click inside the terminal window so it has the keyboard, then press a letter at 
 - **V** to view a passage: type the start of a book name, then the chapter and verse. For the numbers you can type the letters under the digits instead, **q w e r t y u i o p** for **1 2 3 4 5 6 7 8 9 0**, and **m** for a minus sign, so a phone's keyboard can stay on letters. Chapter and verse count from the start of the book, so **0** or a negative number counts back: John 3:0 is John 2:25, and Exodus chapter 0 is Genesis 50. Enter alone means 1.
 - **S** to search for words.
 - **C** to change translation.
-- **A** to add a translation: see [Adding translations](#adding-translations).
+- **A** to add or remove a translation: see [Adding translations](#adding-translations).
 - **I** for information about EBaC.
 - **E** to exit.
 
@@ -61,7 +61,7 @@ On a phone or tablet, you only need the keyboard to type a search or a book, cha
 | Typing a book, chapter or verse | brings up the keyboard | left: erase the last character · a long swipe left: erase it all |
 | "Press any key" | anywhere | anywhere |
 
-Swiping up moves on to what comes next, as when scrolling. Tapping **View**, **Search** or **Add a translation** brings up the keyboard, since you type next; the other gestures don't. Tapping anywhere else brings up the keyboard, as before, so you can still use every key. If you hide the keyboard to see more of the screen, swiping and tapping keep it hidden; while it's showing, they leave it showing.
+Swiping up moves on to what comes next, as when scrolling. Tapping **View**, **Search** or **Add or remove a translation** brings up the keyboard, since you type next; the other gestures don't. Tapping anywhere else brings up the keyboard, as before, so you can still use every key. If you hide the keyboard to see more of the screen, swiping and tapping keep it hidden; while it's showing, they leave it showing.
 
 ### If you use the Home Assistant Companion app
 
@@ -73,7 +73,9 @@ Turning the phone in the Companion app takes the keyboard away from the page alt
 
 ## Adding translations
 
-The app comes with the King James Version. To add others, press **A** at the main menu: EBaC lists 31 English translations it can download, including the American Standard Version, the Berean Standard Bible, the Lexham English Bible, Young's Literal Translation, Darby, Webster, the Geneva Bible and Tyndale. Type the numbers of the ones you want, such as `6` or `6 14`, and press Enter (**n** and **p**, then Enter, turn the page; Enter alone goes back). Those already added are marked with a `*`. Each one is downloaded and indexed in a few seconds, and then you are back at the main menu with the new translation chosen; EBaC starts with it from then on, and **C** switches between them.
+The app comes with the King James Version. To add others, or remove them, press **A** at the main menu: EBaC lists 31 English translations it can download, including the American Standard Version, the Berean Standard Bible, the Lexham English Bible, Young's Literal Translation, Darby, Webster, the Geneva Bible and Tyndale. Type the numbers of the ones you want, such as `6` or `6 14`, and press Enter (**n** and **p**, then Enter, turn the page; Enter alone goes back). Those already added are marked with a `*`. Each one is downloaded and indexed in a few seconds, and then you are back at the main menu with the new translation chosen; EBaC starts with it from then on, and **C** switches between them. Choosing one you've already added downloads a fresh copy and makes it the one EBaC starts with.
+
+To remove one, type **r** and its number, such as `r6`. Adding and removing can be mixed, done in the order typed: `r10 11 13` removes 10 and adds 11 and 13. If anything in the line is wrong, nothing is done and the list says what was wrong. The King James Version that comes with the app can't be removed.
 
 Added translations are kept in this app's own storage, so they are kept when the app is updated, and they are included in Home Assistant's backups (about 6 MB for each whole Bible, 2 MB for a New Testament). They are available to every Home Assistant user. To download, Home Assistant needs to be connected to the Internet.
 
