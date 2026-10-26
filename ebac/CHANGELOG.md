@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.1.24
+
+- Fix: tapping **A** with the keyboard hidden could leave the top of the
+  list of translations off the screen, as the keyboard came up just
+  after the list was drawn. The list is now drawn again whenever the
+  window changes size.
+- Built from EBaC commit `2d79e17`.
+
 ## 2.1.23
 
 - Remove translations you added: under **A** (now "Add or remove a
