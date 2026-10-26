@@ -1,5 +1,26 @@
 # Changelog
 
+## 2.2.0
+
+EBaC 2.1, with a new concordance index:
+
+- **Phrase search.** Type words alone, such as `in the beginning`, to
+  find them next to each other, in order. Phrases run on from one verse
+  into the next, and the King James translators' [bracketed] words may be
+  typed or left out. With other operators, `.` makes a phrase:
+  `in the . beginning . @gen 0`.
+- **New distance operators**: `+2`, `-2` and `~2` find verses exactly
+  two verses after, before, or apart (a number alone still means
+  "within").
+- **Translations with the Apocrypha** can be added: the King James
+  Version with the Apocrypha, the Douay-Rheims Bible and the Catholic
+  Public Domain Version (34 translations in all).
+- Every word is indexed, and counted right: "the" occurs 64,040 times in
+  the King James Version (shown as 31,487 before).
+- The translations you have added are indexed again, once, when the app
+  starts after this update (a few seconds each).
+- Built from EBaC commit `b50fb87`.
+
 ## 2.1.25
 
 - After adding or removing translations, EBaC waits for a key (or a tap)

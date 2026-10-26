@@ -33,13 +33,17 @@ Type the words to search for, then Enter. Searches use postfix (reverse Polish) 
 | Search | Finds |
 |---|---|
 | `amen` | every verse containing "amen" |
+| `in the beginning` | the phrase "in the beginning" (words alone are a phrase) |
 | `love hate 0` | verses with both "love" and "hate" |
 | `love hate 2` | "love" and "hate" within 2 verses of each other |
+| `cain abel +1` | "abel" in the verse after one with "cain" (both verses are listed) |
 | `amen @rev 0` | "amen" in the book of Revelation |
 | `food @gen -` | "food" anywhere except Genesis |
 | `@mat @mar , @lu , @joh , blessed 0` | "blessed" in the four Gospels |
 
-A number means AND (`0` = in the same verse), `,` means OR, `-` means AND NOT, and `@` plus the start of a book's name means that book.
+A number means AND (`0` = in the same verse, `2` = within two verses), `+2`, `-2` and `~2` mean exactly two verses after, before, or apart, `,` means OR, `-` means AND NOT, `.` makes a phrase (with other operators, put it after each word but the first: `in the . beginning . @gen 0`), and `@` plus the start of a book's name means that book.
+
+Phrases find words next to each other, whatever the punctuation, and run on from one verse into the next (and across chapters and books). Words in [brackets], the King James translators' added words, may be typed or left out: `darkness upon the face` and `darkness was upon` both find Genesis 1:2.
 
 The top of the list says how many verses were found. For a search of one word alone it also says how many times the word occurs, which can be more, since a verse may have it twice: "56 verses, grass 62 times", with the word highlighted as it is in the verses.
 
@@ -73,7 +77,7 @@ Turning the phone in the Companion app takes the keyboard away from the page alt
 
 ## Adding translations
 
-The app comes with the King James Version. To add others, or remove them, press **A** at the main menu: EBaC lists 31 English translations it can download, including the American Standard Version, the Berean Standard Bible, the Lexham English Bible, Young's Literal Translation, Darby, Webster, the Geneva Bible and Tyndale. Type the numbers of the ones you want, such as `6` or `6 14`, and press Enter (**n** and **p**, then Enter, turn the page; Enter alone goes back). Those already added are marked with a `*`. Each one is downloaded and indexed in a few seconds; when it's done, press any key (or tap) and you are back at the main menu with the new translation chosen; EBaC starts with it from then on, and **C** switches between them. Choosing one you've already added downloads a fresh copy and makes it the one EBaC starts with.
+The app comes with the King James Version. To add others, or remove them, press **A** at the main menu: EBaC lists 34 English translations it can download, including the American Standard Version, the Berean Standard Bible, the Lexham English Bible, Young's Literal Translation, Darby, Webster, the Geneva Bible, Tyndale, and three with the Apocrypha (the King James Version with the Apocrypha, the Douay-Rheims Bible and the Catholic Public Domain Version). Type the numbers of the ones you want, such as `6` or `6 14`, and press Enter (**n** and **p**, then Enter, turn the page; Enter alone goes back). Those already added are marked with a `*`. Each one is downloaded and indexed in a few seconds; when it's done, press any key (or tap) and you are back at the main menu with the new translation chosen; EBaC starts with it from then on, and **C** switches between them. Choosing one you've already added downloads a fresh copy and makes it the one EBaC starts with.
 
 To remove one, type **r** and its number, such as `r6`. Adding and removing can be mixed, done in the order typed: `r10 11 13` removes 10 and adds 11 and 13. If anything in the line is wrong, nothing is done and the list says what was wrong. The King James Version that comes with the app can't be removed.
 
