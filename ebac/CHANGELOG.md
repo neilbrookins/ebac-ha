@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.2.2
+
+- With keyboards that hold back letters as a word being typed (such as
+  the Amazon keyboard on a Fire tablet), each letter now reaches EBaC at
+  once on every screen, so a book's name is completed as you type it,
+  as on other phones. (2.2.1 did this only where one key does
+  something, so completion worked only some of the time.)
+
 ## 2.2.1
 
 - A key pressed at the main menu (or in a list, a passage, or at "Press

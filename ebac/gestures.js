@@ -41,9 +41,8 @@
  * Search and Add a translation in the main menu, which ask for typing next. Any other tap works
  * as before: it brings up the keyboard.
  *
- * On the screens that act on one key, letters a phone keyboard holds back
- * as a word being composed are sent at once (see "Keyboards that hold back
- * what is typed", below).
+ * Letters a phone keyboard holds back as a word being composed are sent to
+ * EBaC at once (see "Keyboards that hold back what is typed", below).
  *
  * The terminal's scrollback (the lines that have scrolled off the top) is
  * turned off. EBaC redraws the whole screen itself, so those lines are only
@@ -540,12 +539,14 @@
     ** composed, and hand the word over only when space or Enter ends it.
     ** The terminal waits for the word, so a single key at the main menu
     ** went nowhere until space was pressed, and then turned up later, at
-    ** the start of the next search. So on the screens that act on one key
-    ** (below), this script takes the letters itself as the keyboard
-    ** composes them, and sends each one at once. A word begun on such a
-    ** screen is followed to its end, even onto a typing screen (the search
-    ** line, say), so nothing is sent twice or lost; a word begun on a typing
-    ** screen is left to the terminal, as before.
+    ** the start of the next search; and a book's name wasn't completed as
+    ** it was typed. EBaC itself acts on every key as it comes, even on its
+    ** typing screens (completing a book's name, editing the search line),
+    ** so on every screen EBaC names, this script takes the letters itself
+    ** as the keyboard composes them, and sends each one at once. A word is
+    ** followed to its end, even if the screen changes on the way, so
+    ** nothing is sent twice or lost. (Before EBaC has named a screen, the
+    ** terminal is left to itself.)
     **
     ** The terminal's typing box holds what the keyboard has typed, and the
     ** letters sent are the change in it: new letters, and a Backspace (DEL)
@@ -553,15 +554,17 @@
     */
     var composing = false;  /* a word being composed is this script's */
     var boxSeen = "";       /* the typing box's text, as last sent */
+    var realKeyDown = false;    /* a key of its own (not 229) is down: the
+                                   terminal sends what it types (a space,
+                                   say, then also typed into the box) */
 
-    /* the screens that act on one key, with no Enter */
-    function oneKeyScreen() {
-        return mode === "menu" || mode === "trans" || mode === "list" ||
-               mode === "passage" || mode === "anykey";
+    /* a screen EBaC has named: its letters are sent at once */
+    function namedScreen() {
+        return mode !== "";
     }
 
     function takesTyping() {
-        return composing || oneKeyScreen();
+        return composing || namedScreen();
     }
 
     /* send the change in the typing box since it was last looked at */
@@ -587,6 +590,8 @@
     }
 
     function onKeyDown(e) {
+        if (term && e.target === term.textarea && e.keyCode !== 229)
+            realKeyDown = true;
         if (!term || e.target !== term.textarea || !takesTyping())
             return;
         if (e.keyCode === 229) {        /* a phone keyboard's "some key" */
@@ -602,7 +607,7 @@
     }
 
     function onCompositionStart(e) {
-        if (!term || e.target !== term.textarea || !oneKeyScreen())
+        if (!term || e.target !== term.textarea || !namedScreen())
             return;
         composing = true;
         boxSeen = term.textarea.value;
@@ -629,8 +634,14 @@
         }, 0);
     }
 
+    function onKeyUp(e) {
+        if (e.keyCode !== 229)
+            realKeyDown = false;
+    }
+
     function onInput(e) {
-        if (!term || e.target !== term.textarea || !takesTyping())
+        if (!term || e.target !== term.textarea || !takesTyping() ||
+                (realKeyDown && !composing))
             return;
         debug("input " + e.inputType + " " + JSON.stringify(e.data));
         e.stopImmediatePropagation();
@@ -681,6 +692,7 @@
         /* (on the terminal, capturing: before the typing box's own
            handlers, which these keep from seeing what they take) */
         el.addEventListener("keydown", onKeyDown, true);
+        el.addEventListener("keyup", onKeyUp, true);
         el.addEventListener("compositionstart", onCompositionStart, true);
         el.addEventListener("compositionupdate", onCompositionUpdate, true);
         el.addEventListener("compositionend", onCompositionEnd, true);

@@ -67,7 +67,7 @@ On a phone or tablet, you only need the keyboard to type a search or a book, cha
 
 Swiping up moves on to what comes next, as when scrolling. Tapping **View**, **Search** or **Add or remove a translation** brings up the keyboard, since you type next; the other gestures don't. Tapping anywhere else brings up the keyboard, as before, so you can still use every key. If you hide the keyboard to see more of the screen, swiping and tapping keep it hidden; while it's showing, they leave it showing.
 
-Some phone keyboards, such as the Amazon keyboard on a Fire tablet, hold back what you type until a word is finished. EBaC takes each key from them at once wherever one key does something (the main menu, lists, passages and "Press any key"), so you don't need to press space after it.
+Some phone keyboards, such as the Amazon keyboard on a Fire tablet, hold back what you type until a word is finished. EBaC takes each letter from them at once, so a single key at the main menu works without pressing space after it, and a book's name is completed as you type it.
 
 ### If you use the Home Assistant Companion app
 
