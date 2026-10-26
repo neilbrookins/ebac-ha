@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.2.1
+
+- A key pressed at the main menu (or in a list, a passage, or at "Press
+  any key") now works at once with phone keyboards that hold back
+  letters as a word being typed, such as the Amazon keyboard on a Fire
+  tablet. Before, the key did nothing until space was pressed, and then
+  turned up at the start of the next search.
+
 ## 2.2.0
 
 EBaC 2.1, with a new concordance index:

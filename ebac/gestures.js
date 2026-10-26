@@ -41,6 +41,10 @@
  * Search and Add a translation in the main menu, which ask for typing next. Any other tap works
  * as before: it brings up the keyboard.
  *
+ * On the screens that act on one key, letters a phone keyboard holds back
+ * as a word being composed are sent at once (see "Keyboards that hold back
+ * what is typed", below).
+ *
  * The terminal's scrollback (the lines that have scrolled off the top) is
  * turned off. EBaC redraws the whole screen itself, so those lines are only
  * old screens, and the terminal would scroll back to them on a swipe down,
@@ -530,11 +534,117 @@
             send(action.key);
     }
 
+    /*
+    ** Keyboards that hold back what is typed. Some phone keyboards (the
+    ** Amazon keyboard on a Fire, for one) treat letters as a word being
+    ** composed, and hand the word over only when space or Enter ends it.
+    ** The terminal waits for the word, so a single key at the main menu
+    ** went nowhere until space was pressed, and then turned up later, at
+    ** the start of the next search. So on the screens that act on one key
+    ** (below), this script takes the letters itself as the keyboard
+    ** composes them, and sends each one at once. A word begun on such a
+    ** screen is followed to its end, even onto a typing screen (the search
+    ** line, say), so nothing is sent twice or lost; a word begun on a typing
+    ** screen is left to the terminal, as before.
+    **
+    ** The terminal's typing box holds what the keyboard has typed, and the
+    ** letters sent are the change in it: new letters, and a Backspace (DEL)
+    ** for each one taken away (the keyboard correcting a word, say).
+    */
+    var composing = false;  /* a word being composed is this script's */
+    var boxSeen = "";       /* the typing box's text, as last sent */
+
+    /* the screens that act on one key, with no Enter */
+    function oneKeyScreen() {
+        return mode === "menu" || mode === "trans" || mode === "list" ||
+               mode === "passage" || mode === "anykey";
+    }
+
+    function takesTyping() {
+        return composing || oneKeyScreen();
+    }
+
+    /* send the change in the typing box since it was last looked at */
+    function sendBoxChange() {
+        var now = term.textarea.value, same = 0, out = "", i;
+
+        while (same < boxSeen.length && same < now.length &&
+                boxSeen.charAt(same) === now.charAt(same))
+            same++;
+        for (i = same; i < boxSeen.length; i++)
+            out += "\x7f";
+        out += now.substring(same);
+        boxSeen = now;
+        if (out) {
+            debug("sent " + JSON.stringify(out));
+            send(out);
+        }
+    }
+
+    function emptyBox() {
+        term.textarea.value = "";
+        boxSeen = "";
+    }
+
+    function onKeyDown(e) {
+        if (!term || e.target !== term.textarea || !takesTyping())
+            return;
+        if (e.keyCode === 229) {        /* a phone keyboard's "some key" */
+            debug("key 229" + (composing ? " (composing)" : ""));
+            if (!composing)
+                boxSeen = term.textarea.value;
+            e.stopImmediatePropagation();   /* (the change is sent below) */
+        } else if (composing) {
+            /* a key of its own (Enter, say): the terminal sends it, and may
+               empty the box; carry on from what the box then holds */
+            setTimeout(function () { boxSeen = term.textarea.value; }, 0);
+        }
+    }
+
+    function onCompositionStart(e) {
+        if (!term || e.target !== term.textarea || !oneKeyScreen())
+            return;
+        composing = true;
+        boxSeen = term.textarea.value;
+        debug("compose start");
+        e.stopImmediatePropagation();
+    }
+
+    function onCompositionUpdate(e) {
+        if (!composing || e.target !== term.textarea)
+            return;
+        debug("compose " + JSON.stringify(e.data));
+        e.stopImmediatePropagation();
+    }
+
+    function onCompositionEnd(e) {
+        if (!composing || e.target !== term.textarea)
+            return;
+        debug("compose end " + JSON.stringify(e.data));
+        e.stopImmediatePropagation();
+        setTimeout(function () {        /* (the box holds the final word now) */
+            sendBoxChange();
+            composing = false;
+            emptyBox();
+        }, 0);
+    }
+
+    function onInput(e) {
+        if (!term || e.target !== term.textarea || !takesTyping())
+            return;
+        debug("input " + e.inputType + " " + JSON.stringify(e.data));
+        e.stopImmediatePropagation();
+        sendBoxChange();
+        if (!composing)
+            emptyBox();
+    }
+
     /* listen for EBaC's "which screen" messages: as soon as the terminal
        exists, before any output arrives */
     function listen(t) {
         term = t;
         mode = "";
+        composing = false;
         noScrollback(t);
         t.parser.registerOscHandler(MODE_OSC, function (name) {
             mode = name;
@@ -568,6 +678,13 @@
             two = null;
         }, true);
         el.addEventListener("click", onClick, true);
+        /* (on the terminal, capturing: before the typing box's own
+           handlers, which these keep from seeing what they take) */
+        el.addEventListener("keydown", onKeyDown, true);
+        el.addEventListener("compositionstart", onCompositionStart, true);
+        el.addEventListener("compositionupdate", onCompositionUpdate, true);
+        el.addEventListener("compositionend", onCompositionEnd, true);
+        el.addEventListener("input", onInput, true);
         if (t.textarea) {
             t.textarea.addEventListener("blur", onBlur);
             t.textarea.addEventListener("focus", function () {
