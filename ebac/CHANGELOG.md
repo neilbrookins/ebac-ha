@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.5.2
+
+- The Information pages (**I** at the main menu) say where to get help
+  or report a problem, by opening an issue on GitHub: for the program,
+  this app, and the texts it downloads (instead of the old SourceForge
+  page). The computers EBaC has run on are listed in the order it was
+  ported to them, from 1992, now ending with the Macintosh and Home
+  Assistant. Every line fits a phone's screen.
+- Built from EBaC commit `d005876`.
+
 ## 2.5.1
 
 - The languages now show their names (such as "Español, Spanish"), not
