@@ -3,10 +3,10 @@ name: EBaC (Electronic Bible and Concordance)
 # The app version. Bump it whenever anything in the app changes (including
 # EBAC_COMMIT in the Dockerfile), so Home Assistant offers the update to
 # people who have it installed.
-version: "2.5.2"
+version: "2.5.3"
 slug: ebac
 description: Bible reader and concordance, in a terminal in the sidebar
-url: https://github.com/neilbrookins/ebac-ha
+url: https://github.com/neilbrookins/ebac-ha-app
 arch:
   - aarch64
   - amd64

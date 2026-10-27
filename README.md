@@ -1,7 +1,7 @@
-# EBaC for Home Assistant
+# EBaC app for Home Assistant
 
 > [!NOTE]
-> **You are looking at EBaC for Home Assistant.** [Home Assistant](https://www.home-assistant.io/) is a free smart-home system, often run on a small computer such as a Raspberry Pi and used through a web browser or its phone app. If you have it, this is the easiest way to get EBaC: there's nothing to type or build, it updates itself, and besides the keyboard it works by tapping, swiping and clicking, on a phone, a tablet or a computer's web browser.
+> **You are looking at the EBaC app for Home Assistant** (an app, which Home Assistant used to call an add-on: a program that runs beside it, here with a page in its sidebar). [Home Assistant](https://www.home-assistant.io/) is a free smart-home system, often run on a small computer such as a Raspberry Pi and used through a web browser or its phone app. If you have it, this is the easiest way to get EBaC: there's nothing to type or build, it updates itself, and besides the keyboard it works by tapping, swiping and clicking, on a phone, a tablet or a computer's web browser.
 >
 > **Don't use Home Assistant?** This version needs it. To run EBaC directly on Linux (including the Raspberry Pi), a Mac or Solaris, in a terminal window with the keyboard, go to **[EBaC](https://github.com/neilbrookins/ebac)**, the main repository, which explains how to install it there.
 
@@ -11,13 +11,13 @@ EBaC itself is developed at [neilbrookins/ebac](https://github.com/neilbrookins/
 
 ## Installing
 
-[![Open your Home Assistant instance and show the add app repository dialog with this repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Fneilbrookins%2Febac-ha)
+[![Open your Home Assistant instance and show the add app repository dialog with this repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Fneilbrookins%2Febac-ha-app)
 
 Click the button above, or add the repository by hand:
 
 1. In Home Assistant, go to **Settings → Apps** and select **Install app**.
 2. Open the menu (⋮) in the top-right corner and select **Repositories**.
-3. Paste `https://github.com/neilbrookins/ebac-ha` and select **Add**, then close the dialog.
+3. Paste `https://github.com/neilbrookins/ebac-ha-app` and select **Add**, then close the dialog.
 4. Find **EBaC (Electronic Bible and Concordance)** in the list (you may need to refresh the page) and select it.
 5. Select **Install**. Installing builds EBaC on your Home Assistant machine, which takes a few minutes, longer on a Raspberry Pi.
 6. Select **Start**, then turn on **Show in sidebar**.

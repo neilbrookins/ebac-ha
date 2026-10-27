@@ -17,7 +17,7 @@ FROM ${BUILD_FROM} AS build
 # BUILD_VERSION is this app's version, which Home Assistant passes to the
 # build; EBaC's Information screen shows it ("Home Assistant app 2.1.13").
 ARG BUILD_VERSION
-ARG EBAC_COMMIT=d0058768fdb96a3dab93c25c6b59b99a5e1a5672
+ARG EBAC_COMMIT=92edb863b5679932929e91221f72a0fc1fb09623
 
 RUN apk add --no-cache build-base ncurses-dev tar
 
@@ -63,5 +63,5 @@ COPY rootfs /
 LABEL \
     org.opencontainers.image.title="Home Assistant App: EBaC" \
     org.opencontainers.image.description="Electronic Bible and Concordance, in a terminal in the sidebar" \
-    org.opencontainers.image.source="https://github.com/neilbrookins/ebac-ha" \
+    org.opencontainers.image.source="https://github.com/neilbrookins/ebac-ha-app" \
     org.opencontainers.image.licenses="GPL-2.0"

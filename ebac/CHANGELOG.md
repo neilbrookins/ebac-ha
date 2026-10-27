@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.5.3
+
+- This app's repository is now **github.com/neilbrookins/ebac-ha-app**
+  (it was ebac-ha), so that it isn't mistaken for an integration. The
+  old address still works: Home Assistant keeps finding updates there,
+  and there is nothing to change in an existing installation (changing
+  it would install the app afresh, without the translations added).
+- Built from EBaC commit `92edb86`.
+
 ## 2.5.2
 
 - The Information pages (**I** at the main menu) say where to get help
