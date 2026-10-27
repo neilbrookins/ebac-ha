@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.6.3
+
+- For the EBaC integration: the translations' titles are given whole
+  (long ones, and those in Cyrillic, were cut short), so "which
+  translation is this?" and "change translation" say them in full.
+- Built from EBaC commit `cb2b7a3`.
+
 ## 2.6.2
 
 - **Licenses.** Before a translation is added (**A** at the main menu),
