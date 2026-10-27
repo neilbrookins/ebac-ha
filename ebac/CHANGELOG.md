@@ -1,5 +1,24 @@
 # Changelog
 
+## 2.5.0
+
+EBaC 2.3.2:
+
+- **Translations in every language.** Pressing **A** now lists the
+  languages first, each by its own name and its name in English, such
+  as "Español, Spanish (4)", English at the top; then that language's
+  translations. 140 translations in 56 languages are offered at the
+  moment, and new ones appear on their own. The names of the languages
+  come from Unicode's language database (fetched the first time, a few
+  seconds, then kept).
+- Languages often written without spaces between words (Chinese,
+  Japanese, Thai) are marked, as searching them works poorly.
+- A slip in a text (an unclosed note) no longer stops a translation
+  being added.
+- The translations you have added are indexed again, once, at the first
+  start (a few seconds each).
+- Built from EBaC commit `2033f7d`.
+
 ## 2.4.1
 
 EBaC 2.3.1:
