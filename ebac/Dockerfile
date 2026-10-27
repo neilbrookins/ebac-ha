@@ -17,7 +17,7 @@ FROM ${BUILD_FROM} AS build
 # BUILD_VERSION is this app's version, which Home Assistant passes to the
 # build; EBaC's Information screen shows it ("Home Assistant app 2.1.13").
 ARG BUILD_VERSION
-ARG EBAC_COMMIT=2dde7c97c09fd59cb2dd22c09b37fd929c2ce19e
+ARG EBAC_COMMIT=c4cf5ba26e16895944609b1fb3b873f73fba58d0
 
 RUN apk add --no-cache build-base ncurses-dev tar
 
@@ -33,7 +33,7 @@ RUN curl -fsSL "https://github.com/neilbrookins/ebac/archive/${EBAC_COMMIT}.tar.
     && make EBAC_PACKAGE="Home Assistant app${BUILD_VERSION:+ $BUILD_VERSION}" \
     && mkdir -p /out/AV \
     && cp bible index add-translation.sh trans groups groups.* /out/ \
-    && cat index.c both.h | sha256sum | cut -c1-64 > /out/index.version \
+    && cat index.c both.h utf8.c utf8.h | sha256sum | cut -c1-64 > /out/index.version \
     && cp AV/* /out/AV/
 
 # ---- Stage 2: the app ----

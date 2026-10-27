@@ -1,5 +1,25 @@
 # Changelog
 
+## 2.4.0
+
+EBaC 2.3: text with letters beyond ASCII (accented letters, Hebrew,
+Greek) is handled properly.
+
+- **Words with such letters are found.** Before, the index cut an
+  accented letter off the start or end of a word, and left out words of
+  Hebrew letters altogether: the Hebrew name of God in the Restored Name
+  King James Version (8,227 times) couldn't be searched for. Now it can,
+  and is highlighted.
+- Capital letters with accents count as small ones, as A to Z always
+  have. Accents are matched exactly as you type them.
+- On the search line and the book prompt, Backspace and the arrow keys
+  take a whole letter, and the cursor stays in step.
+- Lines wrap, and book names line up, correctly with such letters.
+- Book names of translations you add keep their accented letters.
+- The translations you have added are indexed again, once, when the app
+  starts after this update (a few seconds each).
+- Built from EBaC commit `c4cf5ba`.
+
 ## 2.3.0
 
 EBaC 2.2:
