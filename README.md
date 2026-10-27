@@ -9,6 +9,14 @@ This repository adds **EBaC, the Electronic Bible and Concordance**, to Home Ass
 
 EBaC itself is developed at [neilbrookins/ebac](https://github.com/neilbrookins/ebac), where it also runs as a standalone program on Linux, macOS and Solaris. This repository only packages it for Home Assistant.
 
+## Contents
+
+- [Installing](#installing)
+- [**Using EBaC**](#using-ebac): reading, searching, adding translations, touch gestures, voice
+- [Updating](#updating)
+- [Supported hardware](#supported-hardware)
+- [License](#license)
+
 ## Installing
 
 [![Open your Home Assistant instance and show the add app repository dialog with this repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Fneilbrookins%2Febac-ha-app)
@@ -23,6 +31,25 @@ Click the button above, or add the repository by hand:
 6. Select **Start**, then turn on **Show in sidebar**.
 
 **EBaC** now appears in the sidebar for every user.
+
+**Installed? Go on to [Using EBaC](#using-ebac).**
+
+## Using EBaC
+
+> [!TIP]
+> **The full guide to using EBaC in Home Assistant is the app's documentation: [DOCS.md](ebac/DOCS.md).** Home Assistant also shows it on the app's page, under **Settings → Apps → EBaC → Documentation**.
+
+| To learn about | Read |
+|---|---|
+| Getting started: the main menu and its keys | [Getting started](ebac/DOCS.md#getting-started) |
+| Reading a passage, and paging through it | [Reading](ebac/DOCS.md#reading) |
+| **Searching**: words, phrases, books, AND, OR, NOT, distances | [Searching](ebac/DOCS.md#searching), and every operator in EBaC's [Searching](https://github.com/neilbrookins/ebac#searching) |
+| **Adding translations**: 140 in 56 languages | [Adding translations](ebac/DOCS.md#adding-translations), and more in EBaC's [Adding other translations](https://github.com/neilbrookins/ebac#adding-other-translations) |
+| Tapping and swiping on a phone or tablet | [Touch gestures](ebac/DOCS.md#touch-gestures) |
+| **Voice**: "John 3:16", then "next verse", with Assist | [Voice](ebac/DOCS.md#voice-with-the-ebac-integration), and the [EBaC integration](https://github.com/neilbrookins/ebac-ha-integration) |
+| Your search history; exiting; troubleshooting | [Your search history](ebac/DOCS.md#your-search-history), [Exiting](ebac/DOCS.md#exiting), [Troubleshooting](ebac/DOCS.md#troubleshooting) |
+
+EBaC works the same here as on a computer, so everything in [EBaC's own instructions](https://github.com/neilbrookins/ebac#contents) applies, except installing it.
 
 ## Updating
 

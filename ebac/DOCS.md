@@ -101,7 +101,7 @@ Pressing **E** at the main menu exits EBaC. As with the Terminal app, the window
 
 Earlier searches are saved in this app's own storage, so they are kept when Home Assistant restarts, when the app is updated, and in backups. Each Home Assistant user has their own history: what one person searches for is not shown to anyone else.
 
-## Voice (coming with the EBaC integration)
+## Voice (with the EBaC integration)
 
 This app also answers Home Assistant's voice assistant, Assist, through the **EBaC integration** ([github.com/neilbrookins/ebac-ha-integration](https://github.com/neilbrookins/ebac-ha-integration), from HACS): say "Genesis one colon one" and hear the verse, then "next verse". When the app starts, it tells Home Assistant it is there, so the integration is offered under **Settings → Devices & services** without an address to type. The app answers on port 8080 of Home Assistant's own internal network only: nothing outside Home Assistant can reach it, and it can only read the Bible, never change anything.
 
