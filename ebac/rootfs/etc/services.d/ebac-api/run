@@ -1,0 +1,31 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+# ==============================================================================
+# Answer the EBaC integration (voice: "Genesis one colon one", "next verse").
+#
+# BusyBox's httpd runs ebac-api as a CGI program, once for each request:
+# http://HOST:8080/cgi-bin/ebac/verse?ref=john+3:16 (see /cgi-bin/ebac).
+# Port 8080 is on Home Assistant's internal network only: it isn't
+# published to the host, so nothing outside Home Assistant reaches it, and
+# ebac-api only reads.
+# ==============================================================================
+
+# /data/ebac is made by the ebac service (ebac-setup) as it starts.
+for _ in $(seq 60); do
+    [ -f /data/ebac/trans ] && break
+    sleep 1
+done
+
+# Tell Home Assistant where to find it, so the integration is offered
+# without an address to type (Settings > Devices & services).
+config=$(bashio::var.json \
+    host "$(bashio::addon.hostname)" \
+    port "^8080" \
+    path "/cgi-bin/ebac")
+if bashio::discovery "ebac" "${config}" > /dev/null; then
+    bashio::log.info "Voice: ebac-api on port 8080, announced to Home Assistant"
+else
+    bashio::log.warning "Voice: couldn't announce ebac-api to Home Assistant"
+fi
+
+exec httpd -f -p 8080 -h /usr/share/ebac-www

@@ -1,0 +1,7 @@
+#!/usr/bin/env bashio
+# shellcheck shell=bash
+# ==============================================================================
+# If the web server for ebac-api stops, s6 starts it again; EBaC in the
+# sidebar goes on regardless.
+# ==============================================================================
+bashio::log.warning "Voice: ebac-api's web server stopped (code $1); starting it again"

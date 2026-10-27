@@ -1,5 +1,19 @@
 # Changelog
 
+## 2.6.0
+
+EBaC 2.4, the first step to voice:
+
+- The app now also runs **ebac-api**, which answers in JSON for the
+  coming EBaC integration (voice: "Genesis one colon one", "next
+  verse"). It is reachable only inside Home Assistant (port 8080 of its
+  internal network, not published), and only reads. The app tells Home
+  Assistant it is there, so the integration will find it by itself.
+- EBaC understands references as they are spoken: "John three
+  sixteen", "first Corinthians thirteen four", "Jude three".
+- Nothing changes in EBaC's screens.
+- Built from EBaC commit `25aebf9`.
+
 ## 2.5.3
 
 - This app's repository is now **github.com/neilbrookins/ebac-ha-app**

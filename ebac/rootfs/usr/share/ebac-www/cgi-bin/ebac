@@ -1,0 +1,6 @@
+#!/bin/sh
+# ebac-api, run by httpd for each request (see /etc/services.d/ebac-api):
+# in /data/ebac, so the translations users add are there too.
+BIBLEROOT=/data/ebac
+export BIBLEROOT
+exec /usr/share/ebac/ebac-api

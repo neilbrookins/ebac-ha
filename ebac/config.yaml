@@ -3,7 +3,7 @@ name: EBaC (Electronic Bible and Concordance)
 # The app version. Bump it whenever anything in the app changes (including
 # EBAC_COMMIT in the Dockerfile), so Home Assistant offers the update to
 # people who have it installed.
-version: "2.5.3"
+version: "2.6.0"
 slug: ebac
 description: Bible reader and concordance, in a terminal in the sidebar
 url: https://github.com/neilbrookins/ebac-ha-app
@@ -21,6 +21,11 @@ ingress_port: 8099
 panel_icon: mdi:book-cross
 panel_title: EBaC
 panel_admin: false
+# Voice: ebac-api answers the EBaC integration (ebac-ha-integration) on
+# port 8080 of Home Assistant's internal network only (the port isn't
+# published to the host), and the app tells Home Assistant it is there.
+discovery:
+  - ebac
 # Troubleshooting: show what EBaC's page sees of the focus and the window's
 # size, in a box in its top right corner (see gestures.js).
 options:

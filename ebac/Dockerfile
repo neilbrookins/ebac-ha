@@ -17,22 +17,23 @@ FROM ${BUILD_FROM} AS build
 # BUILD_VERSION is this app's version, which Home Assistant passes to the
 # build; EBaC's Information screen shows it ("Home Assistant app 2.1.13").
 ARG BUILD_VERSION
-ARG EBAC_COMMIT=92edb863b5679932929e91221f72a0fc1fb09623
+ARG EBAC_COMMIT=25aebf9aafee18e568795be2b37401a5260a650b
 
 RUN apk add --no-cache build-base ncurses-dev tar
 
 # "make" builds the program and also each translation's concordance
 # index (the .dat files in AV), which isn't stored in the EBaC repository.
 # The index program, the translation importer (add-translation.sh, for
-# A)dd a translation) and the groups of books (groups, groups.KJVA: =nt in
-# a search) are kept too, and index.version identifies the index
+# A)dd a translation), the groups of books (groups, groups.KJVA: =nt in
+# a search) and ebac-api (EBaC's answers in JSON, for the EBaC
+# integration's voice commands) are kept too, and index.version identifies the index
 # program's source, so that ebac-setup can tell when an update changes it.
 WORKDIR /src
 RUN curl -fsSL "https://github.com/neilbrookins/ebac/archive/${EBAC_COMMIT}.tar.gz" \
         | tar -xz --strip-components=1 \
     && make EBAC_PACKAGE="Home Assistant app${BUILD_VERSION:+ $BUILD_VERSION}" \
     && mkdir -p /out/AV \
-    && cp bible index add-translation.sh trans groups groups.* /out/ \
+    && cp bible ebac-api index add-translation.sh trans groups groups.* /out/ \
     && cat index.c both.h utf8.c utf8.h | sha256sum | cut -c1-64 > /out/index.version \
     && cp AV/* /out/AV/
 
@@ -43,7 +44,10 @@ FROM ${BUILD_FROM}
 # ncurses-terminfo-base describes ttyd's terminal (xterm-256color).
 # The translation importer needs only BusyBox (its sh and awk) and curl
 # with ca-certificates, to download (the base image has those already).
-RUN apk add --no-cache ttyd ncurses-libs ncurses-terminfo-base curl ca-certificates
+# busybox-extras has BusyBox's web server, httpd, which runs ebac-api for
+# the EBaC integration (see /etc/services.d/ebac-api).
+RUN apk add --no-cache ttyd ncurses-libs ncurses-terminfo-base curl ca-certificates \
+        busybox-extras
 
 # EBaC's files: the program, the 'trans' list, the King James text, the
 # index program, the translation importer and the groups of books. (EBaC itself runs from
