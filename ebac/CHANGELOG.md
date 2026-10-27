@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.5.1
+
+- The languages now show their names (such as "Español, Spanish"), not
+  only codes such as "es".
+- The heading of the language and translation lists is two lines, so
+  the page number isn't cut off on a phone.
+- A translation whose text is missing where EBaC downloads it (the
+  Reina Valera Gómez, for one) is now said to be so.
+- Built from EBaC commit `7079a04`.
+
 ## 2.5.0
 
 EBaC 2.3.2:
