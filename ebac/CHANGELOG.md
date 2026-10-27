@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.6.2
+
+- **Licenses.** Before a translation is added (**A** at the main menu),
+  EBaC shows its license, such as "Public Domain", "GPL" or
+  "Copyrighted; Free non-commercial distribution", and the address of
+  its page at CrossWire, and asks whether you agree to it: **y** adds
+  it, **n** skips it. It asks every time, a fresh copy too, since a
+  license can change. What was agreed to, and when, is kept in the
+  translation's folder (a file named license).
+- Built from EBaC commit `3a6bd27`.
+
 ## 2.6.1
 
 - ebac-api also lists the numbers it understands ("a hundred and
