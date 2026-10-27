@@ -14,7 +14,7 @@
  *   menu      the nearest of C, A, V, S or I:   -
  *             that key (never E, so a
  *             slightly missed tap can't exit)
- *   trans     a numbered translation: it        left/right: back, unchanged
+ *   trans     the nearest numbered translation  left/right: back, unchanged
  *   transenter  (more than 9 translations, shown a page at a time)
  *             a numbered translation: its       up/down: next/previous page;
  *             number and Enter                  left/right: back, unchanged
@@ -351,6 +351,27 @@
         return best;
     }
 
+    /* the numbered translation ("3) ...") nearest a point, on the screen
+       for changing translation: its number, or null. As on the main menu,
+       EBaC puts a blank line between them when they fit so, and the half of
+       it nearer a translation goes with that one; one to a line, the
+       nearest is the one tapped. */
+    function nearestTranslation(y) {
+        var pos = rowPos(y), best = null, bestDist = 1, r, m, d;
+
+        for (r = 0; r < term.rows; r++) {
+            m = /^\s*([0-9]+)\)/.exec(rowText(r));
+            if (!m)
+                continue;
+            d = Math.abs(pos - (r + 0.5));
+            if (d < bestDist) {
+                best = m[1];
+                bestDist = d;
+            }
+        }
+        return best;
+    }
+
     /* what a tap does: { key, keyboard } or null for nothing */
     function tapAction(y) {
         var m, r, text, key, row = rowAt(y);
@@ -367,11 +388,11 @@
                come up */
             return { key: key, keyboard: key === "v" || key === "s" || key === "a" };
         case "trans":
-            m = /^\s*([1-9])\)/.exec(rowText(row));
-            return m ? { key: m[1], keyboard: false } : null;
+            key = nearestTranslation(y);
+            return key ? { key: key, keyboard: false } : null;
         case "transenter":
-            m = /^\s*([0-9]+)\)/.exec(rowText(row));
-            return m ? { key: m[1] + "\r", keyboard: false } : null;
+            key = nearestTranslation(y);
+            return key ? { key: key + "\r", keyboard: false } : null;
         case "list":
             /* a result's label is on its first line; its other lines start
                with spaces. Anything else (the header, "--More--", a blank

@@ -39,9 +39,13 @@ Type the words to search for, then Enter. Searches use postfix (reverse Polish) 
 | `cain abel +1` | "abel" in the verse after one with "cain" (both verses are listed) |
 | `amen @rev 0` | "amen" in the book of Revelation |
 | `food @gen -` | "food" anywhere except Genesis |
-| `@mat @mar , @lu , @joh , blessed 0` | "blessed" in the four Gospels |
+| `blessed =gospels 0` | "blessed" in the four Gospels (a group of books) |
+| `faith =nt 0` | "faith" in the New Testament |
+| `grace =rom..phile 0` | "grace" from Romans to Philemon |
 
 A number means AND (`0` = in the same verse, `2` = within two verses), `+2`, `-2` and `~2` mean exactly two verses after, before, or apart, `,` means OR, `-` means AND NOT, `.` makes a phrase (with other operators, put it after each word but the first: `in the . beginning . @gen 0`), and `@` plus the start of a book's name means that book.
+
+`=` plus the start of a group's name means a group of books: `=ot` and `=nt` (the Old and New Testaments); `=law`, `=history`, `=poetry`, `=majorprophets`, `=minorprophets`; `=gospels`, `=synoptics`, `=paul`, `=pastoral`, `=general` (James to Jude) and `=john` (John's gospel, letters and Revelation). As with books, type just enough to be unique: `=n`, `=go`, `=ma`. If it could be more than one, EBaC says which: "=p matches =poetry, =paul and =pastoral". `=` and two books is every book from one to the other: `=rom..phile`. Each translation keeps its publisher's arrangement: the Old Testament of the Douay-Rheims Bible includes Tobit and the others, and the King James Version with the Apocrypha has `=apocrypha` too.
 
 Phrases find words next to each other, whatever the punctuation, and run on from one verse into the next (and across chapters and books). Words in [brackets], the King James translators' added words, may be typed or left out: `darkness upon the face` and `darkness was upon` both find Genesis 1:2.
 
@@ -58,14 +62,14 @@ On a phone or tablet, you only need the keyboard to type a search or a book, cha
 | Where | Tap | Swipe |
 |---|---|---|
 | Main menu | **Change**, **View**, **Search** or **Information**, or the blank line next to it (Exit isn't tappable) | — |
-| Choosing a translation | a translation | left or right: back, unchanged |
+| Choosing a translation | a translation, or the blank line next to it | left or right: back, unchanged |
 | Search results | a result, anywhere on it: read it in context | up: next page · down: previous page · left or right: back |
 | Reading a passage | — | up or down: one verse · a long swipe: a whole screen · with two fingers: the next or previous book · left or right: back to the results |
 | Typing a search | brings up the keyboard | down: your previous search · up: the next one (any length: one step) · left or right: the cursor one character · a long swipe left or right: to the start or end of the line |
 | Typing a book, chapter or verse | brings up the keyboard | left: erase the last character · a long swipe left: erase it all |
 | "Press any key" | anywhere | anywhere |
 
-Swiping up moves on to what comes next, as when scrolling. Tapping **View**, **Search** or **Add or remove a translation** brings up the keyboard, since you type next; the other gestures don't. Tapping anywhere else brings up the keyboard, as before, so you can still use every key. If you hide the keyboard to see more of the screen, swiping and tapping keep it hidden; while it's showing, they leave it showing.
+When the list of translations fits on the screen with a blank line between them, it is shown that way, as the main menu is, so each is easier to tap; otherwise one to a line. Swiping up moves on to what comes next, as when scrolling. Tapping **View**, **Search** or **Add or remove a translation** brings up the keyboard, since you type next; the other gestures don't. Tapping anywhere else brings up the keyboard, as before, so you can still use every key. If you hide the keyboard to see more of the screen, swiping and tapping keep it hidden; while it's showing, they leave it showing.
 
 Some phone keyboards, such as the Amazon keyboard on a Fire tablet, hold back what you type until a word is finished. EBaC takes each letter from them at once, so a single key at the main menu works without pressing space after it, and a book's name is completed as you type it.
 

@@ -10,8 +10,10 @@
 # updates, and includes in backups. This makes /data/ebac a complete EBaC
 # folder:
 #
-#   - the image's translations, importer and index program, as links into
-#     the image (made again at each start, so they follow updates);
+#   - the image's translations, importer, index program and groups of books
+#     (groups, groups.KJVA), as links into the image (made again at each
+#     start, so they follow updates; a real file put in place of one, such
+#     as a groups file of the user's own, is left alone);
 #   - the translations the user added, as folders of their own;
 #   - 'trans': the image's list at first; then the user's, in its order
 #     (EBaC starts with the first: an added translation goes at the top),
@@ -46,6 +48,11 @@ names() {
 
 link add-translation.sh
 link index
+set +f                  # (the groups files, by their names: groups.*)
+for file in "$image"/groups "$image"/groups.*; do
+    [ -f "$file" ] && link "${file##*/}"
+done
+set -f
 built_in=$(names "$image/trans")
 for name in $built_in; do
     link "$name"

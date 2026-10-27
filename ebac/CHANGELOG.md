@@ -1,5 +1,28 @@
 # Changelog
 
+## 2.3.0
+
+EBaC 2.2:
+
+- **Groups of books in searches.** `=` and a group's name means every
+  book of the group: `faith =nt 0` finds "faith" in the New Testament.
+  The groups: `=ot`, `=nt`, `=law`, `=history`, `=poetry`,
+  `=majorprophets`, `=minorprophets`, `=gospels`, `=synoptics`, `=paul`,
+  `=pastoral`, `=general` and `=john`, and in the King James Version
+  with the Apocrypha, `=apocrypha`. Type just enough of the name to be
+  unique (`=n`, `=go`); if it could be more than one, EBaC says which.
+  Each translation keeps its publisher's arrangement: the Old Testament
+  of the Douay-Rheims Bible includes Tobit and the others.
+- **Ranges of books**: `=rom..phile` is every book from Romans to
+  Philemon.
+- An `@` book name that could be more than one book now says which:
+  "@1t matches 1Thessalonians and 1Timothy".
+- **Change translation**: with a blank line between the translations,
+  as on the main menu, when they fit on the screen that way, so each is
+  easier to tap (a tap on the blank line next to one chooses it); one
+  to a line when they don't. It adapts when the phone is turned.
+- Built from EBaC commit `2dde7c9`.
+
 ## 2.2.3
 
 - **Numbers for Roman numerals in book names.** Most translations write

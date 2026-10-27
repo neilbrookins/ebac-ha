@@ -17,21 +17,22 @@ FROM ${BUILD_FROM} AS build
 # BUILD_VERSION is this app's version, which Home Assistant passes to the
 # build; EBaC's Information screen shows it ("Home Assistant app 2.1.13").
 ARG BUILD_VERSION
-ARG EBAC_COMMIT=0fe4aef20f06e24ed53697e485822a6f97e53a35
+ARG EBAC_COMMIT=2dde7c97c09fd59cb2dd22c09b37fd929c2ce19e
 
 RUN apk add --no-cache build-base ncurses-dev tar
 
 # "make" builds the program and also each translation's concordance
 # index (the .dat files in AV), which isn't stored in the EBaC repository.
-# The index program and the translation importer (add-translation.sh, for
-# A)dd a translation) are kept too, and index.version identifies the index
+# The index program, the translation importer (add-translation.sh, for
+# A)dd a translation) and the groups of books (groups, groups.KJVA: =nt in
+# a search) are kept too, and index.version identifies the index
 # program's source, so that ebac-setup can tell when an update changes it.
 WORKDIR /src
 RUN curl -fsSL "https://github.com/neilbrookins/ebac/archive/${EBAC_COMMIT}.tar.gz" \
         | tar -xz --strip-components=1 \
     && make EBAC_PACKAGE="Home Assistant app${BUILD_VERSION:+ $BUILD_VERSION}" \
     && mkdir -p /out/AV \
-    && cp bible index add-translation.sh trans /out/ \
+    && cp bible index add-translation.sh trans groups groups.* /out/ \
     && cat index.c both.h | sha256sum | cut -c1-64 > /out/index.version \
     && cp AV/* /out/AV/
 
@@ -45,7 +46,7 @@ FROM ${BUILD_FROM}
 RUN apk add --no-cache ttyd ncurses-libs ncurses-terminfo-base curl ca-certificates
 
 # EBaC's files: the program, the 'trans' list, the King James text, the
-# index program and the translation importer. (EBaC itself runs from
+# index program, the translation importer and the groups of books. (EBaC itself runs from
 # /data/ebac, which links to these: see ebac-setup.)
 COPY --from=build /out /usr/share/ebac
 
