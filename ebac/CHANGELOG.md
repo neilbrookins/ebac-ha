@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.6.1
+
+- ebac-api also lists the numbers it understands ("a hundred and
+  nineteen", "cxix"), and books as "1st Samuel" too, for the EBaC
+  integration's sentences; a run of verses read aloud says only what is
+  new ("Verse 17.", "Chapter 4, verse 1.").
+- Built from EBaC commit `0b362fb`.
+
 ## 2.6.0
 
 EBaC 2.4, the first step to voice:

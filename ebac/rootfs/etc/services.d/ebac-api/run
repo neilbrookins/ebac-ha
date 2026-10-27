@@ -19,7 +19,7 @@ done
 # Tell Home Assistant where to find it, so the integration is offered
 # without an address to type (Settings > Devices & services).
 config=$(bashio::var.json \
-    host "$(bashio::addon.hostname)" \
+    host "$(bashio::app.hostname)" \
     port "^8080" \
     path "/cgi-bin/ebac")
 if bashio::discovery "ebac" "${config}" > /dev/null; then
