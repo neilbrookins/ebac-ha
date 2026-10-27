@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.6.4
+
+- The list of languages (**A** at the main menu) says it takes one
+  language: "Type the number of one language, then Enter." Typing
+  several, as the list of translations after it allows, is answered
+  "One language at a time: translations come next." (It used to say
+  "Not in the list", as if the numbers were wrong.)
+- Built from EBaC commit `84b47c2`.
+
 ## 2.6.3
 
 - For the EBaC integration: the translations' titles are given whole
