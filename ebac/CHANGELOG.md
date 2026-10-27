@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.6.5
+
+- A translation's license page address is shown whole, on one line
+  (wrapped by the screen), so a double-click selects all of it to copy.
+- Turning the phone, or the keyboard coming up, while EBaC asks whether
+  you agree to a license no longer repeats the question across the
+  screen.
+- Built from EBaC commit `9d853d7`.
+
 ## 2.6.4
 
 - The list of languages (**A** at the main menu) says it takes one
