@@ -1,5 +1,21 @@
 # Changelog
 
+## 2.4.1
+
+EBaC 2.3.1:
+
+- **Hebrew reads right to left.** The terminal shows every line from
+  left to right, so Hebrew words (such as the name of God in the
+  Restored Name King James Version) appeared back to front. Now each
+  stretch of Hebrew is turned about as it is shown, leaving the English
+  around it as it is; two Hebrew words together change places too,
+  numbers keep their order, and vowel points stay with their letters.
+  Highlighting follows the letters. (While you type Hebrew on the search
+  line, it still shows in the order typed.)
+- The translations you have added are indexed again, once, at the first
+  start (a few seconds each; the indexes come out the same).
+- Built from EBaC commit `9b82a13`.
+
 ## 2.4.0
 
 EBaC 2.3: text with letters beyond ASCII (accented letters, Hebrew,
