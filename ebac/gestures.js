@@ -25,16 +25,16 @@
  *                                               with two fingers, up/down: the
  *                                               next/previous book (f, b)
  *   anykey    anywhere: a key ("Press any key") any: a key
- *   search    -                                 down: the previous search in
+ *   search    keyboard up: Enter               down: the previous search in
  *                                               the history, up: the next
  *                                               (Up and Down arrows), any length;
  *                                               left/right: cursor left/right,
  *                                               a long one: to the start/end
  *                                               (Home, End)
- *   input     -                                 left: erase a character
+ *   input     keyboard up: Enter               left: erase a character
  *   (book,                                      (Backspace), a long one: the
- *   chapter,                                    whole entry (CTRL-U)
- *   verse)
+ *   chapter,                                    whole entry (CTRL-U);
+ *   verse)                                      right: Enter
  *   addlist   -                                 up: next page, down: previous
  *   (A: the                                     (what was typed erased, then
  *   lists of                                    n or p and Enter); left/right:
@@ -411,6 +411,12 @@
             return null;
         case "anykey":
             return { key: " ", keyboard: false };
+        case "input":
+        case "search":
+            /* typing a line: while the keyboard is up, a tap is Enter; while
+               it's hidden, a tap brings it up (null: an ordinary tap), as
+               it always has, so it can always be got back */
+            return keyboardUp ? { key: "\r", keyboard: true } : null;
         }
         return null;
     }
@@ -443,6 +449,8 @@
             }
             if (mode === "input" && dx < 0)     /* erase */
                 return longSide ? "\x15" : "\b";        /* CTRL-U, Backspace */
+            if (mode === "input")               /* right: Enter */
+                return "\r";
             return null;
         }
         if (mode === "list" || mode === "transenter")

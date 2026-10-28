@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.6.12
+
+- **Enter by tap or swipe while typing.** Typing a book, chapter or
+  verse: with the keyboard up, a tap is Enter, and so is a swipe right
+  (a swipe left still erases). Typing a search: with the keyboard up, a
+  tap is Enter (swipes still move the cursor and step through earlier
+  searches). With the keyboard hidden, a tap brings it up, as before.
+- Built from EBaC commit `e454434` (unchanged).
+
 ## 2.6.11
 
 - **Exit can be tapped** on the main menu, like every other item.
