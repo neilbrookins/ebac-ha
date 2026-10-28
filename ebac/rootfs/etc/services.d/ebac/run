@@ -33,7 +33,11 @@ fi
 # X-Remote-User-Name; ttyd passes it to ebac-session as TTYD_USER (and
 # refuses connections without it, which only come from outside ingress).
 # --index: ttyd's own page with touch gestures added (see the Dockerfile).
+# theme: white on black, for the most contrast (ttyd's own is light grey on
+# dark grey, which makes Hebrew's small vowel points hard to see); bold
+# text white too, not a brighter grey.
 exec ttyd --writable --port 8099 --client-option titleFixed=EBaC \
+    --client-option 'theme={"foreground":"#ffffff","background":"#000000","cursor":"#ffffff","cursorAccent":"#000000","selectionBackground":"#5a5a5a","white":"#ffffff","brightWhite":"#ffffff"}' \
     --auth-header X-Remote-User-Name \
     --index "$page" \
     /usr/bin/ebac-session

@@ -1,5 +1,19 @@
 # Changelog
 
+## 2.6.6
+
+- **White on black.** EBaC's screen is now pure white text on a black
+  background, for the most contrast (it was light grey on dark grey),
+  so small marks such as Hebrew's vowel points are easier to see.
+- **Ancient Hebrew** is now listed by name in the list of languages (**A**
+  at the main menu), beside Ancient Greek, instead of as "hbo". Its
+  texts, such as the Westminster Leningrad Codex (WLC), have the vowel
+  points. Other languages Unicode has no name for (Tausug, Central Sama,
+  Beaver) are named too, from IANA's registry of language codes. The
+  first time **A** is pressed after updating, the names are fetched
+  again, which takes a few seconds.
+- Built from EBaC commit `a6a68a5`.
+
 ## 2.6.5
 
 - A translation's license page address is shown whole, on one line
