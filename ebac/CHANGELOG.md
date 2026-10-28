@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.6.11
+
+- **Exit can be tapped** on the main menu, like every other item.
+- Built from EBaC commit `e454434` (unchanged).
+
 ## 2.6.10
 
 - Voice: when several verses are read in a row ("read on"), each after

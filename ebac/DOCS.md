@@ -61,7 +61,7 @@ On a phone or tablet, you only need the keyboard to type a search or a book, cha
 
 | Where | Tap | Swipe |
 |---|---|---|
-| Main menu | **Change**, **View**, **Search** or **Information**, or the blank line next to it (Exit isn't tappable) | — |
+| Main menu | any item, or the blank line next to it | — |
 | Choosing a translation | a translation, or the blank line next to it | left or right: back, unchanged |
 | Search results | a result, anywhere on it: read it in context | up: next page · down: previous page · left or right: back |
 | Reading a passage | — | up or down: one verse · a long swipe: a whole screen · with two fingers: the next or previous book · left or right: back to the results |
@@ -96,7 +96,7 @@ Added translations are kept in this app's own storage, so they are kept when the
 
 ## Exiting
 
-Pressing **E** at the main menu exits EBaC. As with the Terminal app, the window greys out and offers **Press ⏎ to Reconnect**; press Enter to start EBaC again at the main menu.
+Pressing or tapping **E** at the main menu exits EBaC. As with the Terminal app, the window greys out and offers **Press ⏎ to Reconnect**; press Enter to start EBaC again at the main menu.
 
 ## Your search history
 

@@ -11,9 +11,8 @@
  * in EBaC's curses.c), and the gestures depend on it:
  *
  *   screen    tap                              swipe
- *   menu      the nearest of C, A, V, S or I:   -
- *             that key (never E, so a
- *             slightly missed tap can't exit)
+ *   menu      the nearest of C, A, V, S, I or   -
+ *             E: that key
  *   trans     the nearest numbered translation  left/right: back, unchanged
  *   transenter  (more than 9 translations, shown a page at a time)
  *             a numbered translation: its       up/down: next/previous page;
@@ -338,8 +337,7 @@
 
     /* the main menu choice nearest a point: its letter, or null. EBaC puts
        a blank line between the choices, and the half of it nearer a choice
-       goes with that choice, so a tap a little off still finds it. E is
-       found too, so that a tap nearer Exit than Information does nothing. */
+       goes with that choice, so a tap a little off still finds it. */
     function nearestChoice(y) {
         var pos = rowPos(y), best = null, bestDist = 1, r, m, d;
 
@@ -386,7 +384,7 @@
         switch (mode) {
         case "menu":
             key = nearestChoice(y);
-            if (!key || key === "E")
+            if (!key)
                 return null;
             key = key.toLowerCase();
             /* View, Search and Add ask for typing next: let the keyboard
