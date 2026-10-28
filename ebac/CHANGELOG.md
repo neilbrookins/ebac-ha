@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.6.13
+
+- **Choose the default translation.** On **C**hange, a translation's
+  number chooses it for now, as before; **d** and its number (**d** then
+  **3**, or **d12** and Enter in a long list) chooses it and makes it
+  the default, the one EBaC starts with from then on, for every Home
+  Assistant user. The main menu then says "now the default".
+- Built from EBaC commit `aa0b56b`.
+
 ## 2.6.12
 
 - **Enter by tap or swipe while typing.** Typing a book, chapter or
