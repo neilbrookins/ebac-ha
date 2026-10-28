@@ -67,6 +67,7 @@ On a phone or tablet, you only need the keyboard to type a search or a book, cha
 | Reading a passage | — | up or down: one verse · a long swipe: a whole screen · with two fingers: the next or previous book · left or right: back to the results |
 | Typing a search | brings up the keyboard | down: your previous search · up: the next one (any length: one step) · left or right: the cursor one character · a long swipe left or right: to the start or end of the line |
 | Typing a book, chapter or verse | brings up the keyboard | left: erase the last character · a long swipe left: erase it all |
+| Adding translations (**A**): the lists of languages and of translations | brings up the keyboard, to type a number | up: next page · down: previous page · left or right: Enter (type a number, such as 1 for English, then swipe to choose it; or swipe alone to go back) |
 | "Press any key" | anywhere | anywhere |
 
 When the list of translations fits on the screen with a blank line between them, it is shown that way, as the main menu is, so each is easier to tap; otherwise one to a line. Swiping up moves on to what comes next, as when scrolling. Tapping **View**, **Search** or **Add or remove a translation** brings up the keyboard, since you type next; the other gestures don't. Tapping anywhere else brings up the keyboard, as before, so you can still use every key. If you hide the keyboard to see more of the screen, swiping and tapping keep it hidden; while it's showing, they leave it showing.

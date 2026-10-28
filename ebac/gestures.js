@@ -36,6 +36,11 @@
  *   (book,                                      (Backspace), a long one: the
  *   chapter,                                    whole entry (CTRL-U)
  *   verse)
+ *   addlist   -                                 up: next page, down: previous
+ *   (A: the                                     (what was typed erased, then
+ *   lists of                                    n or p and Enter); left/right:
+ *   languages,                                  Enter (what was typed, such as
+ *   translations)                               1 for English; or alone, back)
  *
  * A tap this script uses doesn't bring up the keyboard, except on View,
  * Search and Add a translation in the main menu, which ask for typing next. Any other tap works
@@ -421,6 +426,14 @@
 
         if (mode === "anykey")
             return " ";
+        if (mode === "addlist") {
+            /* the importer's lists (add-translation.sh): the same on both */
+            if (Math.abs(dx) > Math.abs(dy))
+                return "\r";                    /* Enter: the number typed */
+            /* (CTRL-U first: the terminal erases a number half typed, so
+               that "1" and a swipe up isn't "1n") */
+            return forward ? "\x15n\r" : "\x15p\r";
+        }
         if (Math.abs(dx) > Math.abs(dy)) {      /* left or right */
             if (mode === "passage" || mode === "list" || mode === "trans" ||
                     mode === "transenter")
@@ -450,7 +463,7 @@
         return mode === "menu" || mode === "trans" || mode === "transenter" ||
                mode === "list" ||
                mode === "passage" || mode === "anykey" || mode === "search" ||
-               mode === "input";
+               mode === "input" || mode === "addlist";
     }
 
     /* the point midway between the first two fingers */

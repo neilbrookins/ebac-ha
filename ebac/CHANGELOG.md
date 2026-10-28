@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.6.9
+
+- **Swipes when adding translations** (**A**): on the lists of languages
+  and of translations, swipe up for the next page and down for the
+  previous; swipe left or right for Enter. So type a number, such as 1
+  for English, and swipe to choose it; or swipe alone to go back. A
+  number half typed is cleared before a page turn. The license question
+  isn't affected (a swipe there types nothing).
+- Built from EBaC commit `0b08954`.
+
 ## 2.6.8
 
 - For the EBaC integration (0.4.0): a search's results can be gone
