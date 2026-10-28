@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.6.10
+
+- Voice: when several verses are read in a row ("read on"), each after
+  the first is introduced by its number alone ("15. And he said unto
+  them..."), not "Verse 15.", so the reading flows. The first still has
+  its whole reference, and a new chapter says "Chapter 4, verse 1."
+- Built from EBaC commit `e454434`.
+
 ## 2.6.9
 
 - **Swipes when adding translations** (**A**): on the lists of languages
