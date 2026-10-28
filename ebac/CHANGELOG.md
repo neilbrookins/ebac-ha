@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.6.7
+
+- The book's name above a passage (such as "2 Corinthians (KJV)") is
+  placed to fit the screen: on a phone it no longer wraps onto a second
+  line.
+- Built from EBaC commit `0ee7888`.
+
 ## 2.6.6
 
 - **White on black.** EBaC's screen is now pure white text on a black
