@@ -6,8 +6,8 @@
   and of translations, swipe up for the next page and down for the
   previous; swipe left or right for Enter. So type a number, such as 1
   for English, and swipe to choose it; or swipe alone to go back. A
-  number half typed is cleared before a page turn. The license question
-  isn't affected (a swipe there types nothing).
+  number half typed is cleared before a page turn. A swipe never
+  answers the license question (where swiping up would be "n", no).
 - Built from EBaC commit `0b08954`.
 
 ## 2.6.8
