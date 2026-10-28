@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.6.8
+
+- For the EBaC integration (0.4.0): a search's results can be gone
+  through by voice, as on EBaC's list screen ("result two", "next
+  result", "more results", "back to the results"); each result is
+  spoken with its whole reference.
+- Built from EBaC commit `8254b96`.
+
 ## 2.6.7
 
 - The book's name above a passage (such as "2 Corinthians (KJV)") is
