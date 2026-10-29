@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.7.1
+
+- Adding a translation by voice: more reliable in the background.
+- Built from EBaC commit `81a261c`.
+
 ## 2.7.0
 
 - **Adding and removing translations by voice**, for the EBaC integration
