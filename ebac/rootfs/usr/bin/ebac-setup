@@ -10,7 +10,8 @@
 # updates, and includes in backups. This makes /data/ebac a complete EBaC
 # folder:
 #
-#   - the image's translations, importer, index program and groups of books
+#   - the image's translations, importers (add-translation.sh,
+#     add-gutenberg.sh), index program and groups of books
 #     (groups, groups.KJVA), as links into the image (made again at each
 #     start, so they follow updates; a real file put in place of one, such
 #     as a groups file of the user's own, is left alone);
@@ -47,6 +48,7 @@ names() {
 }
 
 link add-translation.sh
+link add-gutenberg.sh
 link index
 set +f                  # (the groups files, by their names: groups.*)
 for file in "$image"/groups "$image"/groups.*; do

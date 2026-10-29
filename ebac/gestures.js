@@ -11,8 +11,8 @@
  * in EBaC's curses.c), and the gestures depend on it:
  *
  *   screen    tap                              swipe
- *   menu      the nearest of C, A, V, S, I or   -
- *             E: that key
+ *   menu      the nearest of C, A, P, V, S, I   -
+ *             or E: that key
  *   trans     the nearest numbered translation  left/right: back, unchanged
  *   transenter  (more than 9 translations, shown a page at a time)
  *             a numbered translation: its       up/down: next/previous page;
@@ -42,7 +42,7 @@
  *   translations)                               1 for English; or alone, back)
  *
  * A tap this script uses doesn't bring up the keyboard, except on View,
- * Search and Add a translation in the main menu, which ask for typing next. Any other tap works
+ * Search, Add a translation and Project Gutenberg in the main menu, which ask for typing next. Any other tap works
  * as before: it brings up the keyboard.
  *
  * Letters a phone keyboard holds back as a word being composed are sent to
@@ -342,7 +342,7 @@
         var pos = rowPos(y), best = null, bestDist = 1, r, m, d;
 
         for (r = 0; r < term.rows; r++) {
-            m = /^\s*([CAVSIE])\)/.exec(rowText(r));
+            m = /^\s*([CAPVSIE])\)/.exec(rowText(r));
             if (!m)
                 continue;
             d = Math.abs(pos - (r + 0.5));
@@ -389,7 +389,7 @@
             key = key.toLowerCase();
             /* View, Search and Add ask for typing next: let the keyboard
                come up */
-            return { key: key, keyboard: key === "v" || key === "s" || key === "a" };
+            return { key: key, keyboard: key === "v" || key === "s" || key === "a" || key === "p" };
         case "trans":
             key = nearestTranslation(y);
             return key ? { key: key, keyboard: false } : null;

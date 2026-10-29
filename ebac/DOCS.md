@@ -10,6 +10,7 @@ Click inside the terminal window so it has the keyboard, then press a letter at 
 - **S** to search for words.
 - **C** to change translation: its number chooses it for now; **d** and its number (such as **d** then **3**) chooses it and makes it the default, the one EBaC starts with from then on, for every Home Assistant user.
 - **A** to add or remove a translation: see [Adding translations](#adding-translations).
+- **P** to add a text from Project Gutenberg, such as the Book of Mormon: see [Texts from Project Gutenberg](#texts-from-project-gutenberg).
 - **I** for information about EBaC.
 - **E** to exit.
 
@@ -93,6 +94,12 @@ The languages and translations are read from where EBaC downloads them each time
 To remove one, type **r** and its number, such as `r6`. Adding and removing can be mixed, done in the order typed: `r10 11 13` removes 10 and adds 11 and 13. If anything in the line is wrong, nothing is done and the list says what was wrong. The King James Version that comes with the app can't be removed.
 
 Added translations are kept in this app's own storage, so they are kept when the app is updated, and they are included in Home Assistant's backups (about 6 MB for each whole Bible, 2 MB for a New Testament). They are available to every Home Assistant user. To download, Home Assistant needs to be connected to the Internet.
+
+## Texts from Project Gutenberg
+
+Some texts, such as the Book of Mormon, aren't among those **A** offers, but are on [Project Gutenberg](https://www.gutenberg.org). Find the text there with its search, open its **Plain Text UTF-8** file in your browser, check it is the one you want, and copy its address (such as `https://www.gutenberg.org/cache/epub/17/pg17.txt`). Then press **P** at EBaC's main menu, paste the address, and press Enter. EBaC downloads it, shows its license and asks whether you agree (**y**), then adds it, as **A** does. To remove one, press **P**, then **r** and its number.
+
+EBaC is taught Gutenberg's texts one at a time, as their layouts differ; for now it knows the Book of Mormon (ebook 17, as **BOM**). Nothing in the text is left out: the front matter (title page, the testimonies, the contents) comes before 1 Nephi chapter 1, and each book's heading and summary before its verse 1, shown as plain text without numbers. Comma or a swipe down from 1:1 reaches them, and searches find them. A verse taller than the screen is shown a screenful at a time: swipe up (or press space) for the rest.
 
 ## Exiting
 

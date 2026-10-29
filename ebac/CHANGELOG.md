@@ -1,5 +1,21 @@
 # Changelog
 
+## 2.8.0
+
+- **Texts from Project Gutenberg (P on the main menu).** Find a text on
+  gutenberg.org, open its "Plain Text UTF-8" file, and paste its
+  address: EBaC downloads it, shows its license, and adds it. The first
+  it knows is the Book of Mormon (ebook 17, as BOM); others are added
+  one at a time. P, then r and a number, removes one.
+- Nothing in such a text is left out: its front matter (title page,
+  testimonies, contents) comes before chapter 1 of its first book, and
+  each book's heading and summary before its verse 1, shown as plain
+  text without numbers. Comma (or a swipe down) from 1:1 reaches them.
+- A verse taller than the screen is shown a screenful at a time.
+- Updating re-indexes the translations you've added (the index program
+  changed), which takes a little while at the first start.
+- Built from EBaC commit `fb2ad6b`.
+
 ## 2.7.2
 
 - **Allow voice to remove translations** checked without **Allow voice to
