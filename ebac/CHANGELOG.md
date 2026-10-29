@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.6.14
+
+- **No needless downloads.** Choosing a translation you've already added
+  (**A**) downloads it again only if its text has changed since. If it
+  is the same version, EBaC says "you already have this version" and
+  changes nothing; to download it again anyway, remove it first (**r**
+  and its number), then add it. Translations added before this version
+  are downloaded once more, the next time they are chosen, so that their
+  version is known from then on.
+- Built from EBaC commit `cd8d1a0`.
+
 ## 2.6.13
 
 - **Choose the default translation.** On **C**hange, a translation's
