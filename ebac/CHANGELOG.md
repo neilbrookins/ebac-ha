@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.6.15
+
+- **Easier to follow when adding several translations.** A blank line
+  now separates each one, so each one's last line shows how it ended.
+- Built from EBaC commit `d2f6b38`.
+
 ## 2.6.14
 
 - **No needless downloads.** Choosing a translation you've already added
