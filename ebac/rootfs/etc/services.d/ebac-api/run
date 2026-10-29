@@ -29,4 +29,17 @@ else
     bashio::log.warning "Voice: couldn't announce ebac-api to Home Assistant"
 fi
 
+# What voice may change (the options; see /cgi-bin/ebac-admin). The
+# Configuration tab can't make one option need another, so removing
+# checked without adding is saved, but does nothing: say so.
+if bashio::config.true 'allow_add'; then
+    if bashio::config.true 'allow_remove'; then
+        bashio::log.info "Voice: adding and removing translations allowed"
+    else
+        bashio::log.info "Voice: adding translations allowed"
+    fi
+elif bashio::config.true 'allow_remove'; then
+    bashio::log.warning "Voice: \"Allow voice to remove translations\" is on, but does nothing without \"Allow voice to add translations\": turn that on too, or this off"
+fi
+
 exec httpd -f -p 8080 -h /usr/share/ebac-www

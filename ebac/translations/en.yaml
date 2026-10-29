@@ -9,8 +9,9 @@ configuration:
   allow_remove:
     name: Allow voice to remove translations
     description: >-
-      Lets the EBaC integration (Assist) remove translations you added
-      (needs adding allowed too). Risk: someone speaking to a voice
+      Lets the EBaC integration (Assist) remove translations you added.
+      Needs "Allow voice to add translations" on too: on its own it does
+      nothing (this page can't stop you checking it alone). Risk: someone speaking to a voice
       assistant, with no password, could delete a translation you paid
       for, such as the NIV. The integration has its own checkbox too.
   debug_overlay:

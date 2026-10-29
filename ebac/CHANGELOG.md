@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.7.2
+
+- **Allow voice to remove translations** checked without **Allow voice to
+  add translations**: Home Assistant's Configuration tab can't stop it
+  being saved that way, but it does nothing (as before), and now the
+  option's description and the app's log say so.
+
 ## 2.7.1
 
 - Adding a translation by voice: more reliable in the background.
