@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.9.0
+
+- **P asks for the ebook number** (the EBook-No. on its page at
+  gutenberg.org: 17 for the Book of Mormon), not an address to paste.
+  EBaC finds the address of its plain text from Gutendex, a catalogue of
+  Gutenberg's ebooks, then downloads it.
+- Built from EBaC commit `8a3bdbe`.
+
 ## 2.8.1
 
 - A short swipe left erases a character on P's address line and the
