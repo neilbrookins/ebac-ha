@@ -448,7 +448,11 @@
                 return longSide ? "\x05" : "\x06";      /* End, Right */
             }
             if (mode === "input" && dx < 0)     /* erase */
-                return longSide ? "\x15" : "\b";        /* CTRL-U, Backspace */
+                /* CTRL-U, or Backspace as the keyboard's own sends it
+                   (DEL): EBaC takes either, but a line read by the shell
+                   (the importers' questions, such as P's address) only
+                   DEL, and shows ^H for CTRL-H */
+                return longSide ? "\x15" : "\x7f";
             if (mode === "input")               /* right: Enter */
                 return "\r";
             return null;

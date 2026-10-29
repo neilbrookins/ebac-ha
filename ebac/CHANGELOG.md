@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.8.1
+
+- A short swipe left erases a character on P's address line and the
+  license question too (it showed ^H there).
+
 ## 2.8.0
 
 - **Texts from Project Gutenberg (P on the main menu).** Find a text on
