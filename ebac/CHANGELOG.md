@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.9.1
+
+- P downloads the ebook straight from Gutenberg
+  (https://www.gutenberg.org/ebooks/NUMBER.txt.utf-8), without asking
+  Gutendex first, which refused (403).
+- Built from EBaC commit `171b688`.
+
 ## 2.9.0
 
 - **P asks for the ebook number** (the EBook-No. on its page at
