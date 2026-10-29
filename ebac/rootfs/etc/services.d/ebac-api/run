@@ -6,8 +6,9 @@
 # BusyBox's httpd runs ebac-api as a CGI program, once for each request:
 # http://HOST:8080/cgi-bin/ebac/verse?ref=john+3:16 (see /cgi-bin/ebac).
 # Port 8080 is on Home Assistant's internal network only: it isn't
-# published to the host, so nothing outside Home Assistant reaches it, and
-# ebac-api only reads.
+# published to the host, so nothing outside Home Assistant reaches it.
+# ebac-api only reads; /cgi-bin/ebac-admin adds and removes translations,
+# only if this app's options allow it (see /cgi-bin/ebac-admin).
 # ==============================================================================
 
 # /data/ebac is made by the ebac service (ebac-setup) as it starts.

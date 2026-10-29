@@ -1,4 +1,18 @@
 configuration:
+  allow_add:
+    name: Allow voice to add translations
+    description: >-
+      Lets the EBaC integration (Assist) download and add translations.
+      Risk: someone speaking to a voice assistant, with no password, could
+      add every translation of a language and fill Home Assistant's disk.
+      The integration has its own checkbox too; both must be on.
+  allow_remove:
+    name: Allow voice to remove translations
+    description: >-
+      Lets the EBaC integration (Assist) remove translations you added
+      (needs adding allowed too). Risk: someone speaking to a voice
+      assistant, with no password, could delete a translation you paid
+      for, such as the NIV. The integration has its own checkbox too.
   debug_overlay:
     name: Troubleshooting box
     description: >-

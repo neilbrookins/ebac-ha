@@ -1,5 +1,21 @@
 # Changelog
 
+## 2.7.0
+
+- **Adding and removing translations by voice**, for the EBaC integration
+  0.5.0: "add translation LITV", "remove translation LITV". Two new
+  options, under **Configuration**, both off unless you check them:
+  **Allow voice to add translations** and **Allow voice to remove
+  translations**. Anyone who can talk to a voice assistant can use them,
+  with no password, so each says its risk. The integration has its own
+  checkboxes too, and both must be on. Restart the app after changing
+  them.
+- A translation added by voice goes at the end of EBaC's list, so EBaC
+  here still starts with the same one.
+- Voice can also ask for EBaC's version ("what version of EBaC is this?")
+  and a translation's license.
+- Built from EBaC commit `a5193fc`.
+
 ## 2.6.16
 
 - The Information page (**I**) also names the voice integration's

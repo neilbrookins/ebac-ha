@@ -17,7 +17,7 @@ FROM ${BUILD_FROM} AS build
 # BUILD_VERSION is this app's version, which Home Assistant passes to the
 # build; EBaC's Information screen shows it ("Home Assistant app 2.1.13").
 ARG BUILD_VERSION
-ARG EBAC_COMMIT=ea59f0caf9d9685017afd1f24dd69a7adef60d1c
+ARG EBAC_COMMIT=a5193fcfb682fc3acb81d911a194601cfa15e3d1
 
 RUN apk add --no-cache build-base ncurses-dev tar
 
@@ -25,15 +25,16 @@ RUN apk add --no-cache build-base ncurses-dev tar
 # index (the .dat files in AV), which isn't stored in the EBaC repository.
 # The index program, the translation importer (add-translation.sh, for
 # A)dd a translation), the groups of books (groups, groups.KJVA: =nt in
-# a search) and ebac-api (EBaC's answers in JSON, for the EBaC
-# integration's voice commands) are kept too, and index.version identifies the index
+# a search), ebac-api (EBaC's answers in JSON, for the EBaC integration's
+# voice commands) and ebac-admin (adding and removing translations by
+# voice, if the app's options allow) are kept too, and index.version identifies the index
 # program's source, so that ebac-setup can tell when an update changes it.
 WORKDIR /src
 RUN curl -fsSL "https://github.com/neilbrookins/ebac/archive/${EBAC_COMMIT}.tar.gz" \
         | tar -xz --strip-components=1 \
     && make EBAC_PACKAGE="Home Assistant app${BUILD_VERSION:+ $BUILD_VERSION}" \
     && mkdir -p /out/AV \
-    && cp bible ebac-api index add-translation.sh trans groups groups.* /out/ \
+    && cp bible ebac-api ebac-admin index add-translation.sh trans groups groups.* /out/ \
     && cat index.c both.h utf8.c utf8.h | sha256sum | cut -c1-64 > /out/index.version \
     && cp AV/* /out/AV/
 
