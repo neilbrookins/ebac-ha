@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.6.16
+
+- The Information page (**I**) also names the voice integration's
+  repository, for help or to report a problem with Assist.
+- Built from EBaC commit `ea59f0c`.
+
 ## 2.6.15
 
 - **Easier to follow when adding several translations.** A blank line
